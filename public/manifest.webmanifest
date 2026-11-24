@@ -1,0 +1,13 @@
+{
+  "name": "Reopen: bring old files back to life",
+  "short_name": "Reopen",
+  "description": "Drop in a folder from an old computer. Your files come back, readable, and nothing leaves your laptop.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5eee2",
+  "theme_color": "#8f3f1d",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
