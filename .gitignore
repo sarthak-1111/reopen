@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.firebase/
+firebase-debug*.log
+*.log
+
+# Local config and secrets: never commit
+.env
+.env.*
+!.env.example
+*.debug-token*
+.claude/

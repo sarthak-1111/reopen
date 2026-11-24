@@ -1,0 +1,22 @@
+{
+  "name": "reopen",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Drop in a folder from an old computer. Your files come back, readable, and nothing leaves your laptop.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "smoke": "vite --open /smoke/",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "firebase": "13.4.0"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vite": "6.4.6"
+  }
+}
