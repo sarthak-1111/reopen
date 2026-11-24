@@ -1,0 +1,406 @@
+[
+  {
+    "path": "text/memo-shift_jis.txt",
+    "bytes": 138,
+    "format": "text",
+    "encoding": "shift_jis",
+    "includes": [
+      "倉庫の在庫確認が終わりました",
+      "総務課"
+    ]
+  },
+  {
+    "path": "text/notice-euc-jp.txt",
+    "bytes": 116,
+    "format": "text",
+    "encoding": "euc-jp",
+    "includes": [
+      "夏季休業のご案内",
+      "守衛室"
+    ]
+  },
+  {
+    "path": "text/letter-cp1252.txt",
+    "bytes": 304,
+    "format": "text",
+    "encoding": "windows-1252",
+    "includes": [
+      "Nous avons bien reçu votre commande",
+      "1 250 €"
+    ]
+  },
+  {
+    "path": "text/ledger-ebcdic-cp037.txt",
+    "bytes": 251,
+    "format": "ebcdic-text",
+    "encoding": "ebcdic-37",
+    "includes": [
+      "MONTHLY LEDGER REPORT",
+      "Printer ribbons"
+    ]
+  },
+  {
+    "path": "sheets/inventory-biff8.xls",
+    "bytes": 4608,
+    "format": "xls-biff8",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ]
+  },
+  {
+    "path": "sheets/inventory-biff5.xls",
+    "bytes": 3584,
+    "format": "xls-biff5",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ]
+  },
+  {
+    "path": "sheets/inventory-biff2.xls",
+    "bytes": 392,
+    "format": "xls-biff2",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ]
+  },
+  {
+    "path": "sheets/inventory.slk",
+    "bytes": 439,
+    "format": "sylk",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ]
+  },
+  {
+    "path": "sheets/inventory.dif",
+    "bytes": 405,
+    "format": "dif",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ]
+  },
+  {
+    "path": "sheets/inventory-2003.xml",
+    "bytes": 2480,
+    "format": "spreadsheetml-2003",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ]
+  },
+  {
+    "path": "sheets/clients.dbf",
+    "bytes": 486,
+    "format": "dbf",
+    "includes": [
+      "Lantern Supplies",
+      "Northwind Paper"
+    ]
+  },
+  {
+    "path": "sheets/suppliers-shift_jis.dbf",
+    "bytes": 191,
+    "format": "dbf",
+    "includes": [
+      "青葉書房",
+      "みなと文具",
+      "横浜"
+    ]
+  },
+  {
+    "path": "sheets/stock-japanese-biff8.xls",
+    "bytes": 4096,
+    "format": "xls-biff8",
+    "includes": [
+      "消しゴム",
+      "ノート"
+    ]
+  },
+  {
+    "path": "docs/garden-club-minutes.rtf",
+    "bytes": 1067,
+    "format": "rtf",
+    "title": "Garden club minutes",
+    "includes": [
+      "Meeting held on 14 June 1992",
+      "The café stall will open",
+      "Repaint the greenhouse door",
+      "£412"
+    ],
+    "headings": [
+      "Garden club minutes",
+      "Decisions"
+    ],
+    "listItems": 4,
+    "pictures": 1
+  },
+  {
+    "path": "docs/training-notice-japanese.rtf",
+    "bytes": 457,
+    "format": "rtf",
+    "includes": [
+      "来月から新しい研修が始まります",
+      "総務課"
+    ],
+    "headings": [
+      "研修のお知らせ"
+    ]
+  },
+  {
+    "path": "docs/quarterly-report-word97.doc",
+    "bytes": 4608,
+    "format": "word-97-doc",
+    "includes": [
+      "Sales rose in the second quarter",
+      "See our price list for details"
+    ],
+    "excludes": [
+      "HYPERLINK"
+    ]
+  },
+  {
+    "path": "docs/minutes-japanese-word97.doc",
+    "bytes": 4608,
+    "format": "word-97-doc",
+    "includes": [
+      "次回の会議は四月十日に行います",
+      "資料は事前に配布します"
+    ]
+  },
+  {
+    "path": "docs/tenants-notice.wri",
+    "bytes": 512,
+    "format": "write-wri",
+    "includes": [
+      "The annual meeting is on Thursday 14 April 1983",
+      "spring clean-up"
+    ]
+  },
+  {
+    "path": "docs/project-status.wpd",
+    "bytes": 158,
+    "format": "wordperfect",
+    "includes": [
+      "PROJECT STATUS NOTE",
+      "Budget remains within the approved limits",
+      "Next review in June 1991"
+    ]
+  },
+  {
+    "path": "images/pattern.bmp",
+    "bytes": 822,
+    "format": "bmp-image"
+  },
+  {
+    "path": "mystery/garden-plan.qnb",
+    "bytes": 183,
+    "format": "unknown",
+    "mystery": "quillstone-notebook-qnb",
+    "title": "Garden",
+    "includes": [
+      "Spring planting",
+      "Sow the beans along the south fence after the last frost.",
+      "Runner beans",
+      "Sweet peas",
+      "Water every second evening in dry weather."
+    ]
+  },
+  {
+    "path": "mystery/recipe-notes.qnb",
+    "bytes": 174,
+    "format": "unknown",
+    "mystery": "quillstone-notebook-qnb",
+    "title": "Recipes",
+    "includes": [
+      "Apple crumble",
+      "Rub the butter into the flour until it looks like breadcrumbs.",
+      "Four cooking apples",
+      "Bake for forty minutes until golden."
+    ]
+  },
+  {
+    "path": "mystery/club-minutes.qnb",
+    "bytes": 146,
+    "format": "unknown",
+    "mystery": "quillstone-notebook-qnb",
+    "title": "Chess club",
+    "includes": [
+      "February meeting",
+      "The club will enter two teams in the spring league.",
+      "Subscriptions stay the same this year."
+    ]
+  },
+  {
+    "path": "old-folder/MEMO1.TXT",
+    "bytes": 138,
+    "format": "text",
+    "encoding": "shift_jis",
+    "includes": [
+      "倉庫の在庫確認が終わりました",
+      "総務課"
+    ],
+    "copyOf": "text/memo-shift_jis.txt"
+  },
+  {
+    "path": "old-folder/NOTICE.TXT",
+    "bytes": 116,
+    "format": "text",
+    "encoding": "euc-jp",
+    "includes": [
+      "夏季休業のご案内",
+      "守衛室"
+    ],
+    "copyOf": "text/notice-euc-jp.txt"
+  },
+  {
+    "path": "old-folder/LETTER.TXT",
+    "bytes": 304,
+    "format": "text",
+    "encoding": "windows-1252",
+    "includes": [
+      "Nous avons bien reçu votre commande",
+      "1 250 €"
+    ],
+    "copyOf": "text/letter-cp1252.txt"
+  },
+  {
+    "path": "old-folder/LEDGER.DAT",
+    "bytes": 251,
+    "format": "ebcdic-text",
+    "encoding": "ebcdic-37",
+    "includes": [
+      "MONTHLY LEDGER REPORT",
+      "Printer ribbons"
+    ],
+    "copyOf": "text/ledger-ebcdic-cp037.txt"
+  },
+  {
+    "path": "old-folder/BUDGET.XLS",
+    "bytes": 4608,
+    "format": "xls-biff8",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ],
+    "copyOf": "sheets/inventory-biff8.xls"
+  },
+  {
+    "path": "old-folder/STOCK.DAT",
+    "bytes": 3584,
+    "format": "xls-biff5",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ],
+    "copyOf": "sheets/inventory-biff5.xls"
+  },
+  {
+    "path": "old-folder/INVENT.SLK",
+    "bytes": 439,
+    "format": "sylk",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ],
+    "copyOf": "sheets/inventory.slk"
+  },
+  {
+    "path": "old-folder/PRICES.DIF",
+    "bytes": 405,
+    "format": "dif",
+    "includes": [
+      "Floppy disks",
+      "Ribbon cartridges"
+    ],
+    "copyOf": "sheets/inventory.dif"
+  },
+  {
+    "path": "old-folder/CLIENTS.DBF",
+    "bytes": 486,
+    "format": "dbf",
+    "includes": [
+      "Lantern Supplies",
+      "Northwind Paper"
+    ],
+    "copyOf": "sheets/clients.dbf"
+  },
+  {
+    "path": "old-folder/MINUTES.RTF",
+    "bytes": 1067,
+    "format": "rtf",
+    "title": "Garden club minutes",
+    "includes": [
+      "Meeting held on 14 June 1992",
+      "The café stall will open",
+      "Repaint the greenhouse door",
+      "£412"
+    ],
+    "headings": [
+      "Garden club minutes",
+      "Decisions"
+    ],
+    "listItems": 4,
+    "pictures": 1,
+    "copyOf": "docs/garden-club-minutes.rtf"
+  },
+  {
+    "path": "old-folder/REPORT.DOC",
+    "bytes": 4608,
+    "format": "word-97-doc",
+    "includes": [
+      "Sales rose in the second quarter",
+      "See our price list for details"
+    ],
+    "excludes": [
+      "HYPERLINK"
+    ],
+    "copyOf": "docs/quarterly-report-word97.doc"
+  },
+  {
+    "path": "old-folder/TENANTS.WRI",
+    "bytes": 512,
+    "format": "write-wri",
+    "includes": [
+      "The annual meeting is on Thursday 14 April 1983",
+      "spring clean-up"
+    ],
+    "copyOf": "docs/tenants-notice.wri"
+  },
+  {
+    "path": "old-folder/STATUS.DOC",
+    "bytes": 158,
+    "format": "wordperfect",
+    "includes": [
+      "PROJECT STATUS NOTE",
+      "Budget remains within the approved limits",
+      "Next review in June 1991"
+    ],
+    "copyOf": "docs/project-status.wpd"
+  },
+  {
+    "path": "old-folder/PAINT.BMP",
+    "bytes": 822,
+    "format": "bmp-image",
+    "copyOf": "images/pattern.bmp"
+  },
+  {
+    "path": "old-folder/NOTEBOOK/GARDEN.QNB",
+    "bytes": 183,
+    "format": "unknown",
+    "mystery": "quillstone-notebook-qnb",
+    "title": "Garden",
+    "includes": [
+      "Spring planting",
+      "Sow the beans along the south fence after the last frost.",
+      "Runner beans",
+      "Sweet peas",
+      "Water every second evening in dry weather."
+    ],
+    "copyOf": "mystery/garden-plan.qnb"
+  }
+]

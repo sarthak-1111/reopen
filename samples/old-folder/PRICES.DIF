@@ -1,0 +1,64 @@
+TABLE
+0,1
+"sheetjs"
+VECTORS
+0,5
+""
+TUPLES
+0,4
+""
+DATA
+0,0
+""
+-1,0
+BOT
+1,0
+"Item"
+1,0
+"Quantity"
+1,0
+"Unit price"
+1,0
+"Total"
+-1,0
+BOT
+1,0
+"Index cards"
+0,120
+V
+0,0.05
+V
+0,6
+V
+-1,0
+BOT
+1,0
+"Floppy disks"
+0,40
+V
+0,1.2
+V
+0,48
+V
+-1,0
+BOT
+1,0
+"Ribbon cartridges"
+0,6
+V
+0,7.5
+V
+0,45
+V
+-1,0
+BOT
+1,0
+"Paper clips (box)"
+0,15
+V
+0,0.8
+V
+0,12
+V
+-1,0
+EOD

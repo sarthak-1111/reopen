@@ -3,7 +3,9 @@
 Checked 2026-11-24 (JST). Deadline: **Nov 30 2026, 2:00 pm PT = Dec 1 2026, 07:00 JST**.
 Commits after that time are not evaluated (rules §7).
 
-## Verdict: CONDITIONAL GO
+## Verdict: CONDITIONAL GO. **Approved by you on 2026-11-24.**
+
+Your decision, 2026-11-24: `jschardet` 4.x (0BSD) is accepted, so it will be used for EBCDIC detection candidates.
 
 Nothing found blocks the project. It needs four things from you before the build can be tested end to end:
 your approval, two CLI sign-ins, the Gemini Nano download, and the Firebase console steps in §4.

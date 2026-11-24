@@ -1,0 +1,50 @@
+Reopen
+Copyright 2026 the Reopen authors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It includes or bundles the following third-party software. Each component keeps its own
+licence; the licence texts ship with the packages in node_modules and in the built bundle's
+dependency sources.
+
+-------------------------------------------------------------------------------
+Apache License 2.0
+-------------------------------------------------------------------------------
+SheetJS "xlsx" (Community Edition) 0.20.3 — Copyright (C) 2012-present SheetJS LLC
+  https://sheetjs.com — spreadsheet reading and writing.
+SheetJS "cfb" 1.2.2 — Copyright (C) 2013-present SheetJS LLC
+  OLE compound file (Word 97 / Excel / Works container) reading; also used by
+  tools/make-samples.mjs to write the self-made Word 97 samples.
+SheetJS "codepage" 1.15.0 — Copyright (C) 2013-present SheetJS LLC
+  src/core/ebcdic-tables.ts is GENERATED from this package's code page tables by
+  tools/gen-ebcdic-tables.mjs (byte-to-character tables for EBCDIC code pages
+  37, 20273, 500, 875, 1026, 1047, 1140 and 20290). The xlsx package's bundled
+  cpexcel tables (from the same project) are loaded lazily for legacy workbooks.
+Firebase JavaScript SDK ("firebase") 13.4.0 — Copyright Google LLC
+
+-------------------------------------------------------------------------------
+MIT License
+-------------------------------------------------------------------------------
+docx 9.16.0 — Copyright (c) 2016 Dolan
+encoding-japanese 2.5.0 — Copyright (c) 2012-present polygonplanet
+chardet 2.2.0 — Copyright (C) 2024 Dmitry Shirokov
+fflate 0.8.3 — Copyright (c) 2026 Arjun Barrett
+ajv 8.20.0 — Copyright (c) 2015-2021 Evgeny Poberezkin
+rtf.js 3.0.9 — Copyright (c) 2015 Thomas Bluemel
+
+-------------------------------------------------------------------------------
+Zero-Clause BSD (0BSD)
+-------------------------------------------------------------------------------
+jschardet 4.1.0 — Copyright (c) 2026 Dan Blanchard (Python source),
+  Copyright (c) 2026 António Afonso (JavaScript port)
+
+-------------------------------------------------------------------------------
+Format documentation
+-------------------------------------------------------------------------------
+The Word 97–2003 text reader (src/core/readers/word97.ts) was written from Microsoft's
+publicly available "[MS-DOC]: Word (.doc) Binary File Format" specification. No code
+from other projects was copied. The WordPerfect and Microsoft Write handling follows
+publicly described file layouts; see docs/core-status.md for what is and is not verified.
+
+Run `npm run licenses` for the full list of production dependencies (including transitive
+ones) and their declared licences.

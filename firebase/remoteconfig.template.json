@@ -1,0 +1,34 @@
+{
+  "parameters": {
+    "cloud_lane_enabled": {
+      "defaultValue": { "value": "true" },
+      "valueType": "BOOLEAN",
+      "description": "Allows the opt-in format researcher to call cloud Gemini with public documentation. The app's built-in default is false (fail closed)."
+    },
+    "batch_size": {
+      "defaultValue": { "value": "4" },
+      "valueType": "NUMBER",
+      "description": "How many files are converted in parallel."
+    },
+    "cloud_model": {
+      "defaultValue": { "value": "gemini-3.8-flash" },
+      "valueType": "STRING",
+      "description": "Cloud model used by the format researcher (public documentation only)."
+    },
+    "cloud_max_output_tokens": {
+      "defaultValue": { "value": "4096" },
+      "valueType": "NUMBER",
+      "description": "Output token cap for cloud calls."
+    },
+    "nano_chunk_chars": {
+      "defaultValue": { "value": "6000" },
+      "valueType": "NUMBER",
+      "description": "Maximum characters of recovered text per on-device call (Nano's context is 9216 tokens)."
+    },
+    "ai_max_attempts": {
+      "defaultValue": { "value": "3" },
+      "valueType": "NUMBER",
+      "description": "Structured-output validation attempts before falling back to deterministic output."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+ID;PSheetJS;N;E
+P;PGeneral
+F;P0;DG0G8;M255
+B;Y5;X4;D0 0 3 4
+O;L;D;B;K47;G100 0.001
+C;Y1;X1;K"Item"
+C;Y1;X2;K"Quantity"
+C;Y1;X3;K"Unit price"
+C;Y1;X4;K"Total"
+C;Y2;X1;K"Index cards"
+C;Y2;X2;K120
+C;Y2;X3;K0.05
+C;Y2;X4;K6
+C;Y3;X1;K"Floppy disks"
+C;Y3;X2;K40
+C;Y3;X3;K1.2
+C;Y3;X4;K48
+C;Y4;X1;K"Ribbon cartridges"
+C;Y4;X2;K6
+C;Y4;X3;K7.5
+C;Y4;X4;K45
+C;Y5;X1;K"Paper clips (box)"
+C;Y5;X2;K15
+C;Y5;X3;K0.8
+C;Y5;X4;K12
+E
