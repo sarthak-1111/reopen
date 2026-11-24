@@ -24,7 +24,12 @@ import { mountLedgerPanel } from './ledger-panel';
 import { mountNanoChip } from './nano-chip';
 import { createRescuePool, type RescuePool } from './pool';
 import { rasteriseResultPictures } from './rasterise';
-import { mountResearcherPlaceholder } from './researcher-panel';
+import { mountResearcherPanel, mountResearcherPlaceholder } from './researcher-panel';
+import type { CloudGate } from '../ai/cloud-gate';
+import type { ConsentStore } from '../ai/consent';
+import type { InferenceBadge } from '../ai/contract';
+import type { SampleFile } from '../research/conformance';
+import { createResearcher } from '../research/researcher';
 import {
   buildExportFiles,
   chooseFinalName,
@@ -41,6 +46,18 @@ import {
 export interface AppOptions {
   /** Files converted in parallel (Remote Config `batch_size`; default 4). */
   batchSize: number;
+  /** Opt-in format researcher (cloud lane). Absent = placeholder message. */
+  researcher?: { gate: CloudGate; consent: ConsentStore; cloudLaneEnabled: () => boolean; aiConfigured: boolean };
+  /** Called for EVERY file read into a session, before any AI work (feeds the taint registry). */
+  onFileLoaded?: (bytes: Uint8Array, text: string | null) => void;
+}
+
+/** All text Reopen extracted from a file (used only to fingerprint it locally). */
+function extractedTextOf(result: RescueResult): string | null {
+  if (result.recoveredText) return result.recoveredText;
+  if (result.structure?.length) return result.structure.map((b) => b.text).join('\n');
+  const textual = result.outputs.find((o) => /^text\/(plain|markdown|csv)/.test(o.mime));
+  return textual ? new TextDecoder().decode(textual.bytes) : null;
 }
 
 const DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
@@ -88,10 +105,40 @@ export function startApp(options: AppOptions): void {
     els.countSkipped.textContent = String(counters.skipped);
   };
 
+  /** Adds a card, or replaces the card already shown for the same original file. */
+  const showCard = (item: RescuedItem, index: number): void => {
+    const card = renderCard(item, index);
+    card.dataset.originalPath = item.originalPath;
+    const previous = Array.from(els.library.querySelectorAll<HTMLElement>('[data-original-path]')).find((el) => el.dataset.originalPath === item.originalPath);
+    if (previous) previous.replaceWith(card);
+    else els.library.append(card);
+  };
+
+  /** Files this session could not convert; bytes stay in memory for local reader tests only. */
+  let unconverted: SampleFile[] = [];
+
   mountNanoChip(els.nano, ai);
   mountLedgerPanel(els.ledger, ai);
   ai.onLedgerChange(renderCounters);
-  mountResearcherPlaceholder(els.researcher);
+  if (options.researcher) {
+    const researcherDeps = options.researcher;
+    mountResearcherPanel(els.researcher, {
+      researcher: createResearcher(researcherDeps.gate),
+      consent: researcherDeps.consent,
+      cloudLaneEnabled: researcherDeps.cloudLaneEnabled,
+      aiConfigured: researcherDeps.aiConfigured,
+      isOnline: () => navigator.onLine,
+      unconvertedFiles: () => unconverted,
+      // Sample files picked in the panel are fingerprinted too, so they can't be pasted into a payload.
+      registerSample: (bytes) => options.onFileLoaded?.(bytes, null),
+      addRescued: (results, badge) => addResearchedResults(results, badge),
+    });
+  } else {
+    mountResearcherPlaceholder(els.researcher);
+  }
+  const sessionChanged = (): void => {
+    els.researcher.dispatchEvent(new Event('reopen:session-changed'));
+  };
   renderCounters();
 
   // Chrome: the File System Access picker. Elsewhere: the classic folder <input> takes its place.
@@ -148,13 +195,22 @@ export function startApp(options: AppOptions): void {
   };
 
   const processFile = async (file: PendingFile, myRun: number, setStatus: (s: FileStatus) => void): Promise<void> => {
+    let bytes: Uint8Array | undefined;
+    let registered = false;
     try {
       setStatus('Reading');
-      const bytes = await file.read();
+      bytes = await file.read();
       if (myRun !== runId || !pool) return;
       setStatus('Converting on this device');
       const result = await pool.rescue(file.path, bytes);
       if (myRun !== runId) return;
+      // Fingerprint every file locally before any AI work, so no cloud payload can carry it.
+      options.onFileLoaded?.(bytes, extractedTextOf(result));
+      registered = true;
+      if (result.conversionLevel === 'none' || (result.outputs.length === 0 && result.detected.format === 'unknown')) {
+        unconverted.push({ name: file.path, bytes });
+        sessionChanged();
+      }
       counters.processedOnDevice++;
       renderCounters();
 
@@ -181,9 +237,10 @@ export function startApp(options: AppOptions): void {
         ...(reconstruction ? { reconstruction } : {}),
       };
       items.push(item);
-      els.library.append(renderCard(item, items.length - 1));
+      showCard(item, items.length - 1);
       setStatus('Done');
     } catch (error) {
+      if (bytes && !registered) options.onFileLoaded?.(bytes, null);
       if (myRun !== runId) return;
       counters.failed++;
       els.library.append(renderFailedCard(file.path, file.size, error instanceof Error ? error.message : String(error)));
@@ -204,6 +261,8 @@ export function startApp(options: AppOptions): void {
     pool?.terminate();
     revokeAllObjectUrls();
     items = [];
+    unconverted = [];
+    sessionChanged();
     taken = new Set<string>();
     counters = emptyCounters();
     runLabel = label;
@@ -268,6 +327,32 @@ export function startApp(options: AppOptions): void {
         (counters.skipped ? `, ${counters.skipped} skipped` : '') +
         `. Cloud calls: ${ai.ledger().length}.`,
     );
+    els.exportAll.disabled = items.length === 0;
+  };
+
+  /** Adds files read with a certified, cloud-drafted reader (the files themselves were read here). */
+  const addResearchedResults = (results: RescueResult[], badge: InferenceBadge): void => {
+    for (const result of results) {
+      const insight: FileInsight = { category: '', summary: null, proposedName: null, encodingHint: null, badge };
+      const { name } = chooseFinalName(result, undefined, taken);
+      result.outputs = renameOutputs(result.outputs, result.proposedName, name);
+      const existing = items.findIndex((item) => item.originalPath === result.source.path);
+      const item: RescuedItem = {
+        id: items.reduce((max, i) => Math.max(max, i.id), 0) + 1,
+        originalPath: result.source.path,
+        result,
+        finalName: name,
+        nameSource: 'content',
+        extraOutputs: [],
+        insight,
+      };
+      if (existing >= 0) items.splice(existing, 1);
+      items.push(item);
+      showCard(item, items.length - 1);
+    }
+    unconverted = unconverted.filter((u) => !results.some((r) => r.source.path === u.name));
+    sessionChanged();
+    els.results.hidden = false;
     els.exportAll.disabled = items.length === 0;
   };
 
@@ -348,6 +433,8 @@ export function startApp(options: AppOptions): void {
     pool = undefined;
     revokeAllObjectUrls();
     items = [];
+    unconverted = [];
+    sessionChanged();
     counters = emptyCounters();
     clear(els.library);
     clear(els.fileList);
