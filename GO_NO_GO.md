@@ -12,6 +12,7 @@ Your decisions, 2026-11-26:
 - Deploy approved: Hosting and Remote Config are live at https://reopen-751ea.web.app.
 - The empty Google Cloud project `reopen-files` (left over from the failed CLI attempt on Nov 24) was shut down. It is pending deletion and recoverable for 30 days.
 - Cloud model switched to `gemini-4-hydrogen` (stable, no billing required per the Firebase AI Logic model list) in Remote Config v3 and the built-in default. `gemini-3.8-flash` answered HTTP 500 "high demand" three times on the live site; `gemini-4-hydrogen` passed the smoke cloud call (5.2 s, schema-valid) and the full researcher both locally and on the live site (see TESTING.md).
+- The v1.1 design (taste-skill pass) was adopted and deployed, tagged `v1.1-buildhybridai`; `v1.0-buildhybridai` is unchanged. The Devpost gallery and thumbnail were updated to the new design; the video was kept.
 
 Nothing found blocks the project. It needs four things from you before the build can be tested end to end:
 your approval, two CLI sign-ins, the Gemini Nano download, and the Firebase console steps in §4.

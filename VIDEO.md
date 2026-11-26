@@ -40,6 +40,7 @@ dedicated Chrome profile; DevTools was never open. Every file shown is a self-ma
 - **The voice is synthetic.** It was generated locally with Bark (MIT). Each line was checked against a Whisper transcript.
 - **Narration only claims what is on screen.**
   - Lines about the SDK badge source, the taint check and the property test were dropped, because the video doesn't show them. The repo documents them.
+- **The visual design changed after recording.** On 2026-11-26 the app got a second design pass (v1.1, following taste-skill): a neutral light page, white cards, one accent colour and a new drop zone. The words, features and order of the page are the same as in the video, but it looks different. The Devpost gallery shows the v1.1 design.
 - **Labels changed after recording.** Two labels were improved after the video was made:
   - A researched file's card now also says "Read on this device. Only the reader was drafted in the cloud, from public documentation."
   - `STATUS.DOC`'s chip now reads "Recovered text — tidied, raw kept" instead of "shown raw" when the checked paragraphs are shown.
