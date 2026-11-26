@@ -17,7 +17,7 @@ your approval, two CLI sign-ins, the Gemini Nano download, and the Firebase cons
 | 2 | Gemini Nano in your Chrome | **PARTIAL.** The API is present and needs no flags; the model is *downloadable* but not downloaded yet. |
 | 3 | Format feasibility | **GO, with limits.** Spreadsheets, RTF and legacy-encoded text convert fully. Most word-processor formats only get text recovery (table below). |
 | 4 | Firebase setup | **PENDING YOU.** Steps in §4. |
-| 5 | Smoke test | **WRITTEN, NOT RUN.** Blocked by §4 and the Nano download. |
+| 5 | Smoke test | **Cloud call PASSED on 2026-11-26** (§5). On-device and offline checks wait for the Nano download. |
 
 ## 1. Rules: what matters for Reopen
 
@@ -128,8 +128,30 @@ CLI sign-ins (you run these; each one waits for you in the browser):
 - Each result shows the **ON DEVICE / CLOUD badge from `response.inferenceSource`**, schema validity, latency, and every network request made during the call.
 - Offline check: after warm-up, turn Wi-Fi off. The on-device call should still succeed with no requests, and the cloud call should fail cleanly.
 
-Status: it type-checks and builds (see "Build check" below). It has **not been run**, because no Firebase project exists yet.
 The smoke run also settles the one open technical risk: does an `ONLY_ON_DEVICE` call try to fetch an App Check token over the network?
+
+### Smoke results
+
+Setup completed on 2026-11-26:
+- AI Logic is enabled with the Gemini Developer API. AI monitoring is off.
+- The project is on the Spark plan, with no billing account.
+- The reCAPTCHA Enterprise key `reopen-web` is restricted to `reopen-751ea.web.app` and `reopen-751ea.firebaseapp.com`.
+- App Check is registered for reopen-web, and enforcement for AI Logic is on.
+- The debug token is registered and kept only in `.env.local`.
+- The browser is Chrome on Windows, at `http://127.0.0.1:5173/smoke/` (Vite dev server).
+
+| Test | Result |
+|---|---|
+| Cloud call (`ONLY_IN_CLOUD`, `gemini-3.8-flash`, JSON schema) | **PASS** (2026-11-26 00:34 UTC). `inferenceSource = "in_cloud"`; output valid against the schema; latency **32,086 ms** (first call); one request: `firebasevertexai.googleapis.com/v1beta/projects/reopen-751ea/models/gemini-3.8-flash:generateContent`. The prompt is the smoke page's own made-up memo text. |
+| On-device call (`ONLY_ON_DEVICE`) | _pending: the Gemini Nano download started 2026-11-26 (at 28% when this was written)._ |
+| Offline: on-device succeeds, cloud fails cleanly | _pending: needs Nano._ |
+| Does `ONLY_ON_DEVICE` need the network for App Check? | _pending: needs Nano._ |
+
+Raw record (cloud):
+
+```json
+{"test":"cloud","at":"2026-11-26T00:34:36.261Z","online":true,"ok":true,"inferenceSource":"in_cloud","output":{"summary":"The riverside office stock count is complete with totals attached for filing under the first quarter.","documentType":"memo"},"schemaValid":true,"latencyMs":32086,"requests":["fetch https://firebasevertexai.googleapis.com/v1beta/projects/reopen-751ea/models/gemini-3.8-flash:generateContent","resource https://firebasevertexai.googleapis.com/v1beta/projects/reopen-751ea/models/gemini-3.8-flash:generateContent"]}
+```
 
 ### Build check (2026-11-24)
 
@@ -139,7 +161,7 @@ The smoke run also settles the one open technical risk: does an `ONLY_ON_DEVICE`
   I pinned **Vite 6.4.6** (Node `^18 || ^20 || >=22`) instead of upgrading your system Node.
 - `npm audit --omit=dev` reports 4 "high" advisories. All four come from `@grpc/grpc-js` via `@firebase/firestore`, a Node-only gRPC transport.
   Reopen never imports Firestore, and it isn't in the browser bundle. npm's suggested fix (downgrading to `firebase@9.14.0`) would remove hybrid inference, so I won't apply it.
-  Planned: an npm `overrides` entry to lift `@grpc/grpc-js` to a patched version, if one installs cleanly.
+  Done on 2026-11-26: an npm `overrides` entry pins `@grpc/grpc-js` 1.14.7, and `npm audit --omit=dev` now reports 0 vulnerabilities.
 
 ## What I need from you
 

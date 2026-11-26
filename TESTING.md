@@ -80,6 +80,7 @@ npm run secret-scan # fails on API keys, App Check debug tokens, private keys or
 | `npm run build`, `npm run licenses`, `npm audit --omit=dev` | Passing (0 vulnerabilities) on 2026-11-26 |
 | Playwright E2E against the local build | _pending_ |
 | Real Gemini Nano call through Firebase AI Logic (`ONLY_ON_DEVICE`) | _pending: needs AI Logic, App Check and the Nano download_ |
-| Real cloud Gemini call through the gate (format researcher) | _pending: same_ |
+| Real cloud Gemini call (`ONLY_IN_CLOUD`) through Firebase AI Logic with App Check | Passed on the smoke page, 2026-11-26: `inferenceSource = in_cloud`, schema-valid, 32 s (GO_NO_GO.md §5) |
+| Real cloud call through the app's gate (format researcher) | _pending_ |
 | Whether on-device calls need the network for App Check | _pending_ |
 | Hosted demo in Chrome, with and without Nano | _pending deployment_ |
