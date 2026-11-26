@@ -50,6 +50,21 @@ export function parsePlugin(text: string): { plugin?: ReaderPlugin; code?: 'inva
   return problems.length ? { code: 'invalid-plugin', problems } : { plugin: data, problems: [] };
 }
 
+const BUSY = /high demand|overloaded|unavailable|deadline expired|\[(?:429|500|503|504) \]/i;
+
+/**
+ * Plain-language message for a failed cloud call. On 2026-11-26 the live site got
+ * "[500 ] This model is currently experiencing high demand" and, earlier, "[503 ] Deadline expired".
+ */
+export function describeModelError(error: unknown): string {
+  const raw = error instanceof Error ? error.message : String(error);
+  if (BUSY.test(raw)) {
+    const status = /\[(\d{3}) \]/.exec(raw)?.[1];
+    return `Cloud Gemini is busy right now${status ? ` (HTTP ${status})` : ''}. Nothing else was sent. Please try again in a minute; it needs your consent again.`;
+  }
+  return `The cloud model could not be reached: ${raw}`;
+}
+
 export interface Researcher {
   prepare(docName: string, docText: string): { request: CloudRequest; payload: string };
   draft(request: CloudRequest, consentToken: string): Promise<DraftResult>;
@@ -89,7 +104,7 @@ export function createResearcher(gate: CloudGate): Researcher {
         if (error instanceof CloudBlockedError) {
           return { ok: false, code: 'blocked', blockCode: error.code, message: error.message, problems: [] };
         }
-        return { ok: false, code: 'model-error', message: `The cloud model could not be reached: ${error instanceof Error ? error.message : String(error)}`, problems: [] };
+        return { ok: false, code: 'model-error', message: describeModelError(error), problems: [] };
       }
       const parsed = parsePlugin(text);
       if (!parsed.plugin) {

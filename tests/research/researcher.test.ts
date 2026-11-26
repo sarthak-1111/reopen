@@ -182,6 +182,23 @@ describe('format researcher through the real cloud gate (fake model)', () => {
     expect(ledger.entries()[0]!.outcome).toBe('error');
   });
 
+  it('a busy or timed-out cloud model gets a plain "try again" message (seen on the live site)', async () => {
+    const busy = [
+      'AI: Error fetching from https://firebasevertexai.googleapis.com/…: [500 ] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. (AI/fetch-error)',
+      'AI: Error fetching from https://firebasevertexai.googleapis.com/…: [503 ] Deadline expired before operation could complete. (AI/fetch-error)',
+    ];
+    for (const message of busy) {
+      const { consent, researcher } = setup({ answers: [new Error(message)] });
+      const { request, payload } = researcher.prepare('spec', SPEC_TEXT);
+      const draft = await researcher.draft(request, await consent.grant(payload));
+      expect(draft).toMatchObject({ ok: false, code: 'model-error' });
+      if (draft.ok) throw new Error('unreachable');
+      expect(draft.message).toMatch(/^Cloud Gemini is busy right now/);
+      expect(draft.message).toContain('Nothing else was sent');
+      expect(draft.message).toContain(message.match(/\[(\d{3}) \]/)![1]!);
+    }
+  });
+
   it('the fixed instructions say the documentation is public and contain no file data', () => {
     const { researcher } = setup();
     const { payload } = researcher.prepare('', 'Some public text about a format.');
