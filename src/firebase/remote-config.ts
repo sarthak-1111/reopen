@@ -27,7 +27,7 @@ export interface ReopenConfig {
 export const DEFAULT_CONFIG: ReopenConfig = {
   cloudLaneEnabled: false,
   batchSize: 4,
-  cloudModel: 'gemini-3.8-flash',
+  cloudModel: 'gemini-4-hydrogen',
   cloudMaxOutputTokens: 4096,
   cloudThinkingLevel: 'LOW',
   nanoChunkChars: 6000,

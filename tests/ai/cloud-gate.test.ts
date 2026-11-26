@@ -144,7 +144,7 @@ describe('cloud gate', () => {
   it('Remote Config values are sanitised and the lane fails closed', () => {
     expect(sanitiseConfig({ cloudLaneEnabled: 'true' as unknown as boolean }, 'remote').cloudLaneEnabled).toBe(false);
     expect(sanitiseConfig({ batchSize: 99, nanoChunkChars: 1 }, 'remote')).toMatchObject({ batchSize: 8, nanoChunkChars: 500 });
-    expect(sanitiseConfig({ cloudModel: 'bad model; drop' }, 'remote').cloudModel).toBe('gemini-3.8-flash');
+    expect(sanitiseConfig({ cloudModel: 'bad model; drop' }, 'remote').cloudModel).toBe('gemini-4-hydrogen');
   });
 });
 

@@ -84,7 +84,7 @@ export async function mockFirebase(context: BrowserContext, options: FirebaseMoc
           entries: {
             cloud_lane_enabled: String(cloudLane),
             batch_size: '4',
-            cloud_model: 'gemini-3.8-flash',
+            cloud_model: 'gemini-4-hydrogen',
             cloud_max_output_tokens: '4096',
             nano_chunk_chars: '6000',
             ai_max_attempts: '3',
