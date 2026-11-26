@@ -17,10 +17,12 @@ const ALLOWED_FILES = [/(^|\/)\.env\.example$/];
 
 const git = (args) => execFileSync('git', args, { encoding: 'utf8' }).split('\n').filter(Boolean);
 
-let files = process.argv.slice(2);
+const args = process.argv.slice(2);
+const staged = args.includes('--staged');
+let files = args.filter((arg) => !arg.startsWith('--'));
 if (files.length === 0) {
   try {
-    files = process.env.GIT_INDEX_FILE || process.argv.includes('--staged') ? git(['diff', '--cached', '--name-only', '--diff-filter=ACM']) : git(['ls-files']);
+    files = staged ? git(['diff', '--cached', '--name-only', '--diff-filter=ACM']) : git(['ls-files']);
   } catch {
     console.error('secret-scan: not a git repository and no files given');
     process.exit(0);
