@@ -95,7 +95,7 @@ BodySpec, kind 'text-block'
 
 A reader is certified only if **every** check passes.
 
-## Verified (by tests: `tests/research/*.test.ts`, 27 tests)
+## Verified (by tests: `tests/research/*.test.ts`, 32 tests)
 
 - **Self-made QNB samples:** the hand-written QNB plugin (`tests/research/qnb-plugin.ts`) passes every check on all three `samples/mystery/*.qnb` files. It reads the manifest's title, text and dates, and consumes every byte.
 - **Wrong plugins fail conformance:**
@@ -131,12 +131,18 @@ Also seen in that run:
 - The consent dialog, the file inputs and the known-text field worked in Chrome.
 - The Playwright suite (`tests/e2e/configured.spec.ts`) covers the same flow against a mock, including declining consent, the lane being off, and being offline.
 
+## Busy model, and the switch to `gemini-4-hydrogen` (2026-11-26)
+
+- On the live site, `gemini-3.8-flash` answered **HTTP 500** "This model is currently experiencing high demand" three times (about 01:10–01:27 UTC). App Check accepted each request. The app showed the error, the ledger recorded "Failed", and nothing else was sent.
+  - The error message is now plain: "Cloud Gemini is busy right now (HTTP 500). Nothing else was sent. Please try again in a minute; it needs your consent again." A unit test covers it.
+- Remote Config (v3) and the built-in default now use `gemini-4-hydrogen`, which is stable and needs no billing according to the Firebase AI Logic model list.
+- **Local dev server, debug token:** the draft arrived in about 160 s, 21/21 checks passed, and the three notebooks opened. The counters read 3 processed on this device and 1 cloud call, which confirms the counting fix against the real service.
+- **Live site, production App Check (reCAPTCHA Enterprise):** the draft arrived in under 90 s (HTTP 200), 21/21 checks passed, and the three notebooks opened as "Quillstone Notebook". The counters again read 3 and 1.
+
 ## Not verified yet
 
-- **Model variability.** Only one successful real draft so far. Another run may draft a reader that fails the local checks. The app then says so, uses nothing, and lets the user try again with fresh consent.
-- **Two UI issues seen in that run are fixed:** cards now show the drafted format's name, and files added only for the tests now count as processed on this device.
-  - The Playwright flow checks the name, and that session files are not counted twice.
-  - The new counting for test-only files has not been re-run against the real service.
+- **Model variability.** Three successful real drafts so far (one with `gemini-3.8-flash`, two with `gemini-4-hydrogen`). Another run may draft a reader that fails the local checks. The app then says so, uses nothing, and lets the user try again with fresh consent.
+- **Latency.** A draft takes between about 1.5 and 3 minutes, and the model can be busy. The panel shows progress text, but no time estimate.
 
 ## Known limitation
 

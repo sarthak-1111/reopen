@@ -1,7 +1,6 @@
 # Testing Reopen
 
-> **Draft.** The verification table at the end lists what has been checked and what has not.
-> It is updated as each check is actually run.
+> The verification table at the end lists what has been checked, when, and what has not.
 
 ## Try it in 3 minutes (judges)
 
@@ -76,15 +75,16 @@ npm run secret-scan # fails on API keys, App Check debug tokens, private keys or
 
 | Check | Status |
 |---|---|
-| `npm test` (unit, property, fallback, architecture) | Passing: 290 tests on 2026-11-26 |
+| `npm test` (unit, property, fallback, architecture) | Passing: 298 tests on 2026-11-26 |
 | `npm run build`, `npm run licenses`, `npm audit --omit=dev` | Passing (0 vulnerabilities) on 2026-11-26 |
-| Playwright E2E against the local build (Firebase mocked) | Passing: 24 passed, 1 skipped (with-Nano test needs `E2E_CHROME_PROFILE`), 2026-11-26 |
+| Playwright E2E against the local build (Firebase mocked) | Passing: 24 passed, 1 skipped (with-Nano test needs `E2E_CHROME_PROFILE`), 2026-11-26, after the UI restyle |
 | Real Gemini Nano call through Firebase AI Logic (`ONLY_ON_DEVICE`) | Passed on the smoke page, 2026-11-26: `inferenceSource = on_device`, schema-valid, 1.1 s warm, zero network requests (GO_NO_GO.md §5) |
 | Real cloud Gemini call (`ONLY_IN_CLOUD`) through Firebase AI Logic with App Check | Passed on the smoke page, 2026-11-26: `inferenceSource = in_cloud`, schema-valid, 32 s (GO_NO_GO.md §5) |
 | Real cloud call through the app's gate (format researcher) | Passed in Chrome, 2026-11-26: reader drafted (1–2 min), 21/21 local checks, three `.qnb` files opened. Needed a fix first (see GO_NO_GO.md §5) |
 | Whether on-device calls need the network for App Check | No requests during on-device calls while online; fully-offline run _pending_ |
 | Sample folder in the real app with Gemini Nano (local dev server, Chrome on Windows) | Passed, 2026-11-26: "14 of 15 files rescued on this device. Cloud calls: 0." in about 45 s, with 43 ON DEVICE badges (summaries, names, reconstruction). Only same-origin and blob requests appeared in Chrome's network log. WordPerfect reconstruction passed the no-invention check |
 | Without Nano | Playwright (fresh profile, Nano unavailable): every card says NO AI, and recovered text is shown raw and labelled |
-| Hosted demo with Gemini Nano (https://reopen-751ea.web.app, Chrome on Windows, production App Check via reCAPTCHA Enterprise) | Passed, 2026-11-26: "14 of 15 files rescued on this device. Cloud calls: 0." in about 59 s, with 43 ON DEVICE results and only same-origin requests. The deployed bundle contains no debug token and no smoke page (`/smoke/` returns 404) |
-| Hosted format researcher (real cloud call) | App Check accepted the request, but cloud Gemini answered HTTP 500 "This model is currently experiencing high demand" twice (2026-11-26 ~01:10 UTC). The app showed the error and recorded "Failed" in the ledger. _Retry pending_ |
-| Hosted demo without Nano (Playwright, `npm run test:e2e:hosted`) | _pending: runs after the UI restyle is redeployed_ |
+| Hosted demo with Gemini Nano (https://reopen-751ea.web.app, Chrome on Windows, production App Check via reCAPTCHA Enterprise) | Passed twice on 2026-11-26, before and after the UI restyle: "14 of 15 files rescued on this device. Cloud calls: 0." in about 60 s, with 43 ON DEVICE results and only same-origin requests. The deployed bundle contains no debug token and no smoke page (`/smoke/` returns 404) |
+| Hosted format researcher (real cloud call, production App Check) | `gemini-3.8-flash` answered HTTP 500 "This model is currently experiencing high demand" three times (2026-11-26, about 01:10–01:27 UTC). The app showed the error and the ledger recorded "Failed". After switching Remote Config to `gemini-4-hydrogen`: **passed** (01:36 UTC). The draft arrived in under 90 s (HTTP 200), 21/21 local checks passed, all three `.qnb` files opened as "Quillstone Notebook", and the counters read 3 processed on this device and 1 cloud call. The same flow on the local dev server took about 160 s |
+| Hosted demo without Nano (Playwright, fresh Chrome profile, `npm run test:e2e:hosted`) | Passed, 2026-11-26, after the restyle: 14 passed, 11 skipped. The skipped tests need the mocked Firebase build (10) or a Nano profile (1). Passed tests include the offline test (after one visit, the app and the sample folder work with no network) and the network guard (a full rescue and export send no file bytes or text anywhere) |
+| Hosted caching | Fixed, 2026-11-26: `/` was served with `max-age=3600`, so a returning browser kept the old build for up to an hour. `/`, `sw.js` and the manifests are now `no-cache`; hashed assets stay immutable. Checked with curl |

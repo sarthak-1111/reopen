@@ -1,10 +1,5 @@
 # Reopen: Devpost description
 
-> **DRAFT for checkpoint 3.** Not final until you approve it. Lines marked _[verify]_ describe things that are built
-> but not yet checked in a real browser with Gemini Nano. They are confirmed or removed before submission.
-
----
-
 **Drop in a folder from an old computer. Your files come back, readable, and nothing leaves your laptop.**
 
 ## Inspiration
@@ -60,17 +55,18 @@ The cloud is used for one thing only: reading **public documentation** about a f
     - Structured output uses `promptOptions.responseConstraint`.
     - `createOptions` declares English and Japanese.
     - `initializeDeviceModel()` warms up the model and shows download progress.
-  - `InferenceMode.ONLY_IN_CLOUD` in JSON mode, for the format researcher only.
+  - `InferenceMode.ONLY_IN_CLOUD` in JSON mode (`gemini-4-hydrogen`, set by Remote Config), for the format researcher only.
     - The reply format is written into the reviewed prompt text, and the thinking level comes from Remote Config.
     - The answer is validated locally against the full schema.
     - We tried constrained `responseSchema` first: the real service rejected our plugin schema ("too many states"), so we switched and recorded why.
+    - When the first model we used answered "high demand" (HTTP 500) during testing, Remote Config let us move to another model without a new build, and the app now tells the user plainly to try again.
   - We deliberately never use `PREFER_ON_DEVICE`, because its silent fallback to the cloud would break the privacy promise. An architecture test fails the build if anyone adds it.
   - Badges come from `response.inferenceSource`.
 - **App Check** with reCAPTCHA Enterprise protects the Gemini endpoint. AI Logic enforcement is on.
 - **Remote Config** controls:
   - the cloud lane switch (the app's built-in default is **off**, so it fails closed)
   - the batch size
-  - the cloud model name and output-token limit
+  - the cloud model name, output-token limit and thinking level
   - the Nano chunk size and retry attempts
 - **Firebase Hosting** serves the app with an offline-capable shell.
 - There is **no database of user files**, because there is nothing to store.
@@ -88,19 +84,20 @@ It writes the exact text to the Privacy Ledger **before** sending.
 **Technological Implementation**
 - Real hybrid routing with a reason for each step: deterministic code first, Nano on-device for anything personal, cloud only for public knowledge.
 - Formats are detected by their structure. Some readers were written from public specifications, such as the Word 97 piece table from Microsoft's [MS-DOC].
-- 290 automated tests, including property-based tests:
+- 298 automated tests, including property-based tests:
   - no invention
   - no file bytes in any cloud payload
   - encoding round-trips
   - readers never throw on random bytes
 - Fallback tests cover: Nano unavailable, offline, cloud lane disabled by Remote Config, consent declined.
-- Playwright end-to-end tests run in Chrome.
+- Playwright end-to-end tests run in Chrome, against a local build (with a mocked Firebase for the cloud paths) and against the live demo.
 
 **Design**
 - One screen and one action: drop a folder in.
 - The header always shows where things run: on-device AI state, files processed on this device, cloud calls.
 - Every card explains how the format was recognised ("Detected from the bytes inside the file, not from its name").
-- Built for accessibility: labelled controls, live regions for progress, a native `<dialog>` for consent, and a warm, readable theme. _[verify keyboard use, contrast and phone width before claiming more]_
+- Calm and readable: warm paper colours, one type scale, and colour kept for the ON DEVICE / CLOUD / NO AI stamps and status dots.
+- Accessibility: native buttons, inputs and `<dialog>`, labelled controls, live regions for progress, a skip link (tested with the keyboard in Playwright), visible focus rings, and reduced-motion support. Text contrast measures at least 4.5:1 in light and dark themes, and the layout has no horizontal scrolling at 360 px wide.
 
 **Potential Impact**
 - Old files are personal, and reading them should not require uploading them.
@@ -127,11 +124,11 @@ and fictional (`SAMPLES.md`).
 - More readers written from public specifications.
 - A shared catalogue of researcher-drafted readers that pass conformance tests.
 
-## Verified so far (removed before submission)
+## Tested on the live demo
 
-- 290/290 tests, the build, the licence check, the secret scan, and `npm audit` (0 vulnerabilities): passing, 2026-11-26.
-- Real cloud call through Firebase AI Logic with App Check: passed, 2026-11-26.
-- Real on-device Nano call: passed (on_device, 1.1 s warm, zero network requests), 2026-11-26.
-- Format researcher end to end with a real cloud call: passed (21/21 local checks), 2026-11-26.
-- Sample folder with Nano in the real app: passed (14/15 rescued, 43 ON DEVICE results, 0 cloud calls, no external requests), 2026-11-26.
-- _[verify]_ the on-device call with the network fully off, and the hosted demo.
+On https://reopen-751ea.web.app in Chrome 156 on Windows, with Gemini Nano, on 2026-11-26:
+- The sample folder: 14 of 15 files rescued in about a minute, 43 ON DEVICE results, **0 cloud calls**, and no requests to any other site.
+- The format researcher, with production App Check: the reader was drafted by cloud Gemini in under two minutes, passed 21 of 21 local checks, and opened all three notebooks.
+- Without Nano (a fresh Chrome profile, Playwright): conversion works, recovered text is labelled raw, and the app works offline after one visit.
+
+Full details are in `TESTING.md`.

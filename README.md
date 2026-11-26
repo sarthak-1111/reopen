@@ -130,6 +130,10 @@ Firebase setup:
 - Word 97 conversion keeps text and paragraphs, not formatting. WordPerfect and similar formats only get text recovery, because their only readers are LGPL/MPL licensed, and Reopen uses MIT, Apache-2.0 and BSD-family code only (see `NOTICE`).
 - See `docs/core-status.md`, `docs/ui-status.md` and `docs/research-status.md` for what is verified and what is not.
 
+## Acknowledgements
+
+The UI pass followed the design checklist in [heydamir/unslop](https://github.com/heydamir/unslop) (CC-BY-4.0). Only its principles were applied; no files, text or code were copied.
+
 ## Licence
 
 Apache-2.0 (`LICENSE`). Third-party notices are in `NOTICE`.
