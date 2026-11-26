@@ -962,7 +962,7 @@ details[open] > summary::before {
 .card-head {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 .card-head h3 {
   font-size: 1.25rem;
@@ -1009,7 +1009,7 @@ details[open] > summary::before {
 }
 
 .origin {
-  margin: 16px 0 0;
+  margin: 12px 0 0;
   color: var(--muted);
   overflow-wrap: anywhere;
 }
@@ -1022,27 +1022,21 @@ details[open] > summary::before {
   color: var(--text-2);
 }
 
-/* Facts: label and value on a hairline ruled list. */
+/* Facts: label and value, one ruled block. */
 .facts {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
-  margin: 16px 0 0;
-  font-size: 0.9375rem;
-  border-top: 1px solid var(--line);
-}
-.facts dt,
-.facts dd {
+  gap: 4px 16px;
+  align-items: baseline;
+  margin: 12px 0 0;
   padding: 8px 0;
-  border-bottom: 1px solid var(--line);
+  font-size: 0.9375rem;
+  border-block: 1px solid var(--line);
 }
 .facts dt {
-  padding-right: 16px;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--muted);
-  align-self: stretch;
-  display: flex;
-  align-items: center;
 }
 .facts dd {
   margin: 0;
@@ -1055,7 +1049,7 @@ details[open] > summary::before {
 }
 .card summary {
   color: var(--text-2);
-  padding-block: 10px;
+  padding-block: 8px;
   font-weight: 500;
 }
 .card summary:hover {
@@ -1071,22 +1065,25 @@ details[open] > summary::before {
 .evidence {
   border-bottom: 1px solid var(--line);
 }
+.facts + .evidence > summary {
+  padding-top: 6px;
+}
 .evidence > p {
   margin: 0 0 12px;
 }
 
 /* What on-device AI added: no box, just its stamp and the words. */
 .ai-area {
-  margin: 16px 0 0;
+  margin: 12px 0 0;
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 .ai-area p {
   margin: 0;
 }
 .summary {
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 .summary > .badge {
   margin-right: 4px;
@@ -1100,7 +1097,7 @@ details[open] > summary::before {
 
 /* Previews: one quiet frame around the converted output (a card holds a picture). */
 .preview {
-  margin: 16px 0 0;
+  margin: 12px 0 0;
 }
 .preview figcaption {
   font-size: 0.8125rem;
@@ -1163,7 +1160,7 @@ details[open] > summary::before {
 .report th,
 .report td {
   border-bottom: 1px solid var(--line);
-  padding: 6px 10px;
+  padding: 5px 10px;
   text-align: left;
   vertical-align: top;
 }
@@ -1184,7 +1181,7 @@ details[open] > summary::before {
 }
 
 .recovered {
-  margin: 16px 0 0;
+  margin: 12px 0 0;
   display: grid;
   gap: 8px;
 }
@@ -1197,7 +1194,7 @@ details[open] > summary::before {
   background: var(--well);
   border: 1px solid var(--line);
   border-radius: var(--r-md);
-  padding: 16px 18px;
+  padding: 14px 16px;
 }
 .reconstruction > p:first-child {
   display: flex;
@@ -1261,8 +1258,8 @@ details[open] > summary::before {
 
 .downloads {
   list-style: none;
-  padding: 16px 0 0;
-  margin: 20px 0 0;
+  padding: 12px 0 0;
+  margin: 16px 0 0;
   border-top: 1px solid var(--line);
   display: flex;
   gap: 8px;
@@ -1744,7 +1741,7 @@ details[open] > summary::before {
     gap: 16px;
   }
   .card {
-    padding: 24px 20px;
+    padding: 24px;
   }
   .panel {
     padding: 24px 20px;
