@@ -345,6 +345,7 @@ export function startApp(options: AppOptions): void {
         nameSource: 'content',
         extraOutputs: [],
         insight,
+        researched: true,
       };
       if (existing >= 0) items.splice(existing, 1);
       // Files added only for the researcher's tests were not counted yet; session files were.

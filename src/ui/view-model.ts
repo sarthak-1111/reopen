@@ -20,6 +20,8 @@ export interface RescuedItem {
   reconstruction?: Reconstruction;
   /** Outputs added in the browser (PNG from WMF/EMF, AI-structured documents). */
   extraOutputs: OutputFile[];
+  /** Read on this device with a reader that cloud Gemini drafted from public documentation. */
+  researched?: true;
 }
 
 export const LEVEL_LABEL: Record<ConversionLevel, string> = {

@@ -142,6 +142,13 @@ function recoveredSection(item: RescuedItem): HTMLElement | null {
   );
 }
 
+/** The level chip; "shown raw" is wrong once checked, reconstructed paragraphs are on show. */
+function levelLabel(item: RescuedItem): string {
+  const level = item.result.conversionLevel;
+  if (level === 'text-recovery' && item.reconstruction && reconstructionUsable(item.reconstruction)) return 'Recovered text — tidied, raw kept';
+  return LEVEL_LABEL[level];
+}
+
 export function renderCard(item: RescuedItem, index: number): HTMLElement {
   const { result } = item;
   const titleId = `card-title-${item.id}`;
@@ -157,9 +164,13 @@ export function renderCard(item: RescuedItem, index: number): HTMLElement {
       'header',
       { class: 'card-head' },
       h('h3', { id: titleId, text: item.finalName }),
-      h('div', { class: 'chips' }, h('span', { class: `chip level-${tone}`, text: LEVEL_LABEL[result.conversionLevel] }), badgeChip(badge, 'AI')),
+      h('div', { class: 'chips' }, h('span', { class: `chip level-${tone}`, text: levelLabel(item) }), badgeChip(badge, item.researched ? 'Reader drafting' : 'AI')),
     ),
     h('p', { class: 'origin small' }, 'was ', h('code', { text: item.originalPath }), ` · ${formatBytes(result.source.size)}`),
+    // A CLOUD stamp on a file card could read as "this file went to the cloud". Say what it means.
+    item.researched
+      ? h('p', { class: 'researched-note small', text: 'Read on this device. Only the reader was drafted in the cloud, from public documentation.' })
+      : null,
     h(
       'dl',
       { class: 'facts' },

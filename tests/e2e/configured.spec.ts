@@ -183,6 +183,8 @@ test.describe('configured build: the cloud lane and its fallbacks', () => {
     await expect(rescued.locator('.chip').first()).not.toHaveText('Not converted');
     // Found in Chrome: the card said "Format: Unknown format" after the reader was applied.
     await expect(rescued.locator('.facts dd').first()).toHaveText('Quillstone Notebook');
+    // The CLOUD stamp is explained: the file itself was read here.
+    await expect(rescued.locator('.researched-note')).toHaveText('Read on this device. Only the reader was drafted in the cloud, from public documentation.');
     // This file was already counted when the folder was rescued; applying a reader must not count it twice.
     await expect(page.locator('#count-device')).toHaveText(processedBefore);
     for (const phrase of QNB_ENTRY.includes!) await expect(rescued).toContainText(phrase);
