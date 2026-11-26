@@ -7,7 +7,7 @@
 
 You need desktop Chrome. Gemini Nano is optional, because the app works without it.
 
-1. Open the demo: `https://reopen-751ea.web.app` _(live after deployment)_.
+1. Open the demo: https://reopen-751ea.web.app.
 2. Look at the header:
    - The chip shows the state of on-device AI.
    - The counters show **0 files processed on this device** and **0 cloud calls**.
@@ -85,4 +85,6 @@ npm run secret-scan # fails on API keys, App Check debug tokens, private keys or
 | Whether on-device calls need the network for App Check | No requests during on-device calls while online; fully-offline run _pending_ |
 | Sample folder in the real app with Gemini Nano (local dev server, Chrome on Windows) | Passed, 2026-11-26: "14 of 15 files rescued on this device. Cloud calls: 0." in about 45 s, with 43 ON DEVICE badges (summaries, names, reconstruction). Only same-origin and blob requests appeared in Chrome's network log. WordPerfect reconstruction passed the no-invention check |
 | Without Nano | Playwright (fresh profile, Nano unavailable): every card says NO AI, and recovered text is shown raw and labelled |
-| Hosted demo in Chrome, with and without Nano | _pending deployment_ |
+| Hosted demo with Gemini Nano (https://reopen-751ea.web.app, Chrome on Windows, production App Check via reCAPTCHA Enterprise) | Passed, 2026-11-26: "14 of 15 files rescued on this device. Cloud calls: 0." in about 59 s, with 43 ON DEVICE results and only same-origin requests. The deployed bundle contains no debug token and no smoke page (`/smoke/` returns 404) |
+| Hosted format researcher (real cloud call) | App Check accepted the request, but cloud Gemini answered HTTP 500 "This model is currently experiencing high demand" twice (2026-11-26 ~01:10 UTC). The app showed the error and recorded "Failed" in the ledger. _Retry pending_ |
+| Hosted demo without Nano (Playwright, `npm run test:e2e:hosted`) | _pending: runs after the UI restyle is redeployed_ |

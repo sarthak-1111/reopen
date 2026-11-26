@@ -7,6 +7,11 @@ Commits after that time are not evaluated (rules §7).
 
 Your decision, 2026-11-24: `jschardet` 4.x (0BSD) is accepted, so it will be used for EBCDIC detection candidates.
 
+Your decisions, 2026-11-26:
+- ISC is accepted for the five packages Firebase brings in.
+- Deploy approved: Hosting and Remote Config are live at https://reopen-751ea.web.app.
+- The empty Google Cloud project `reopen-files` (left over from the failed CLI attempt on Nov 24) was shut down. It is pending deletion and recoverable for 30 days.
+
 Nothing found blocks the project. It needs four things from you before the build can be tested end to end:
 your approval, two CLI sign-ins, the Gemini Nano download, and the Firebase console steps in §4.
 

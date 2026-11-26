@@ -7,7 +7,7 @@ and text saved in legacy encodings such as Shift_JIS, EUC-JP, Windows-1252 or EB
 DOCX, Markdown, CSV and PNG, gives them sensible names, and builds a browsable catalogue. Everything runs in
 your browser. The AI that helps (Gemini Nano) runs **on your device**, through Firebase AI Logic.
 
-- **Hosted demo:** _to be added after deployment_ (`https://reopen-751ea.web.app`)
+- **Hosted demo:** https://reopen-751ea.web.app (desktop Chrome; Gemini Nano optional)
 - **Built for:** #BuildHybridAI 2026 (Web / Chrome). Licence: Apache-2.0.
 
 ## The routing rule
