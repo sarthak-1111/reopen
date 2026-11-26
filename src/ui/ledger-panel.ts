@@ -16,7 +16,7 @@ function entryRow(entry: LedgerEntry): HTMLElement {
       h('strong', { text: entry.feature }),
       ' ',
       badgeChip(entry.badge, entry.feature),
-      h('span', { class: 'muted small', text: ` ${Number.isNaN(time.getTime()) ? entry.at : time.toLocaleTimeString()} · ${entry.model} · ${formatBytes(entry.bytes)} · ${OUTCOME_LABEL[entry.outcome]}` }),
+      h('span', { class: 'ledger-meta', text: ` ${Number.isNaN(time.getTime()) ? entry.at : time.toLocaleTimeString()} · ${entry.model} · ${formatBytes(entry.bytes)} · ${OUTCOME_LABEL[entry.outcome]}` }),
     ),
     h('details', {}, h('summary', { text: 'Exactly what was sent' }), h('pre', { text: entry.sentText, attrs: { tabindex: 0 } })),
   );
@@ -35,7 +35,8 @@ export function mountLedgerPanel(root: HTMLElement, ai: AiService): () => void {
     }
     root.append(
       h('p', {}, h('strong', { text: `${entries.length} cloud call${entries.length === 1 ? '' : 's'} this session.` }), ' Each one contains public documentation you chose to share — never your files.'),
-      h('ol', { class: 'ledger-list', attrs: { reversed: true } }, ...[...entries].reverse().map(entryRow)),
+      // An explicit start: Chrome numbered a one-entry reversed list "2." (seen 2026-11-26).
+      h('ol', { class: 'ledger-list', attrs: { reversed: true, start: entries.length } }, ...[...entries].reverse().map(entryRow)),
       h('button', {
         class: 'btn btn-quiet',
         text: 'Export ledger (.json)',

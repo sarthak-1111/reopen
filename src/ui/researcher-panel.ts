@@ -143,8 +143,8 @@ export function mountResearcherPanel(root: HTMLElement, deps: ResearcherPanelDep
     h('p', { id: 'consent-desc', class: 'small' }, 'This is ', h('strong', { text: 'exactly' }), ' what will be sent, together with the reply format. None of your files or their contents are included.'),
     payloadView,
     payloadBytes,
-    h('p', {}, publicBox, ' ', h('label', { attrs: { for: 'research-public' }, text: 'This is public documentation I’m allowed to share.' })),
-    h('div', { class: 'actions' }, send, ' ', cancel),
+    h('p', { class: 'consent-check' }, publicBox, h('label', { attrs: { for: 'research-public' }, text: 'This is public documentation I’m allowed to share.' })),
+    h('div', { class: 'actions' }, send, cancel),
   );
 
   const refreshStatus = (): void => {
@@ -200,13 +200,17 @@ export function mountResearcherPanel(root: HTMLElement, deps: ResearcherPanelDep
     reportArea.append(
       h('p', {}, h('strong', { text: r.passed ? 'All tests passed on this computer.' : 'Some tests failed, so this reader will not be used.' })),
       h(
-        'table',
-        { class: 'report' },
-        h('thead', {}, h('tr', {}, h('th', { text: 'File' }), h('th', { text: 'Check' }), h('th', { text: 'Result' }), h('th', { text: 'Detail' }))),
+        'div',
+        { class: 'table-scroll report-scroll', attrs: { tabindex: 0, role: 'region', 'aria-label': 'Test results' } },
         h(
-          'tbody',
-          {},
-          ...r.checks.map((c) => h('tr', {}, h('td', {}, h('code', { text: c.file })), h('td', { text: c.id }), h('td', { class: c.passed ? 'pass' : 'fail', text: c.passed ? 'pass' : 'FAIL' }), h('td', { text: c.detail }))),
+          'table',
+          { class: 'report' },
+          h('thead', {}, h('tr', {}, h('th', { text: 'File' }), h('th', { text: 'Check' }), h('th', { text: 'Result' }), h('th', { text: 'Detail' }))),
+          h(
+            'tbody',
+            {},
+            ...r.checks.map((c) => h('tr', {}, h('td', {}, h('code', { text: c.file })), h('td', { text: c.id }), h('td', { class: c.passed ? 'pass' : 'fail', text: c.passed ? 'pass' : 'FAIL' }), h('td', { text: c.detail }))),
+          ),
         ),
       ),
     );
@@ -301,22 +305,22 @@ export function mountResearcherPanel(root: HTMLElement, deps: ResearcherPanelDep
       h('p', {}, h('strong', { text: 'Never sent: ' }), 'your files, their bytes or their contents. The drafted reader is tested and used on this device.'),
     ),
     status,
-    h('p', {}, h('label', { attrs: { for: 'research-doc-name' }, text: 'Document name ' }), docName),
-    h('p', {}, h('label', { attrs: { for: 'research-doc-text' }, text: 'Public documentation' }), h('br'), docText),
-    h('p', { class: 'small' }, h('label', { attrs: { for: 'research-doc-file' }, text: 'or load a spec file (.txt, .md, .html): ' }), docFile),
+    h('div', { class: 'field' }, h('label', { attrs: { for: 'research-doc-name' }, text: 'Document name' }), docName),
+    h('div', { class: 'field' }, h('label', { attrs: { for: 'research-doc-text' }, text: 'Public documentation' }), docText),
+    h('div', { class: 'field' }, h('label', { attrs: { for: 'research-doc-file' } }, 'Or load a spec file', h('span', { class: 'field-hint', text: '.txt, .md or .html' })), docFile),
     h('p', {}, review),
     dialog,
     draftArea,
     h('h3', { text: 'Test on your files (on this computer)' }),
     sampleList,
-    h('p', { class: 'small' }, h('label', { attrs: { for: 'research-sample-files' }, text: 'Add sample files: ' }), sampleFiles),
+    h('div', { class: 'field' }, h('label', { attrs: { for: 'research-sample-files' }, text: 'Add sample files' }), sampleFiles),
     h(
-      'p',
-      { class: 'small' },
-      h('label', { attrs: { for: 'research-known-text' }, text: 'A word or phrase you know is in these files (recommended, checked on this computer): ' }),
+      'div',
+      { class: 'field' },
+      h('label', { attrs: { for: 'research-known-text' } }, 'A word or phrase you know is in these files', h('span', { class: 'field-hint', text: 'Recommended. Checked on this computer.' })),
       knownText,
     ),
-    h('p', {}, runTests, ' ', useReader),
+    h('div', { class: 'actions research-actions' }, runTests, useReader),
     reportArea,
   );
   refreshStatus();
