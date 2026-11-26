@@ -45,9 +45,10 @@ export default defineConfig({
   build: {
     target: 'es2022',
     rollupOptions: {
+      // The smoke page (smoke/) is a diagnostic for `npm run smoke` only. It is not built
+      // or deployed, so the hosted app's only path to a cloud model is the cloud gate.
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
-        smoke: resolve(import.meta.dirname, 'smoke/index.html'),
       },
     },
   },

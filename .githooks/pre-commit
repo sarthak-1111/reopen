@@ -1,0 +1,3 @@
+#!/bin/sh
+# Refuse commits that contain keys, debug tokens or local config.
+exec node tools/secret-scan.mjs --staged
