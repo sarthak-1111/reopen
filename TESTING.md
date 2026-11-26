@@ -11,14 +11,14 @@ You need desktop Chrome. Gemini Nano is optional, because the app works without 
 2. Look at the header:
    - The chip shows the state of on-device AI.
    - The counters show **0 files processed on this device** and **0 cloud calls**.
-3. Click **Try the sample folder**. It holds 38 self-made, fictional files from an "old computer" (see `SAMPLES.md`):
-   - Shift_JIS and EUC-JP notes
-   - Excel 95/97 workbooks and dBASE tables
-   - RTF and Word 97 letters
-   - a Write document
-   - a WordPerfect file renamed to `.DOC`
-   - EBCDIC text
-   - three files in an unknown format
+3. Click **Try the sample folder**. It holds 15 self-made, fictional files from an "old computer" (see `SAMPLES.md`):
+   - Japanese and Windows-1252 text notes
+   - EBCDIC text named `LEDGER.DAT`
+   - Excel workbooks (one is named `STOCK.DAT`), SYLK, DIF and a dBASE table
+   - an RTF document, a Word 97 report and a Write document
+   - a WordPerfect file renamed to `STATUS.DOC`
+   - a BMP image
+   - one file in an unknown format (`GARDEN.QNB`)
 4. Watch **Your library** fill. Each card shows:
    - the format Reopen **detected from the bytes** (not from the file name)
    - the encoding
@@ -39,7 +39,7 @@ You need desktop Chrome. Gemini Nano is optional, because the app works without 
    - Click **Review what will be sent**. The dialog shows **exactly** the text that would be sent.
    - Your files are listed under "Never sent".
    - Tick the box only if you agree, then send.
-   - The drafted reader is data, not code. Run **Run tests on this computer** on `samples/mystery/*.qnb` before **Use this reader**.
+   - The drafted reader is data, not code. Add the three files in `samples/mystery/` under **Add sample files**, then click **Run tests on this computer** before **Use this reader**.
    - The Privacy Ledger records the call with its exact text.
 
 ### With Gemini Nano
