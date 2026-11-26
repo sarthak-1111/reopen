@@ -25,7 +25,7 @@ export function createLedger(now: () => Date = () => new Date()): Ledger {
         id,
         at: now().toISOString(),
         bytes: new TextEncoder().encode(entry.sentText).length,
-        outcome: 'blocked',
+        outcome: 'sending',
         badge: 'UNKNOWN',
       });
       emit();

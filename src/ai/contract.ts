@@ -34,7 +34,8 @@ export interface LedgerEntry {
   model: string;
   sentText: string;
   bytes: number;
-  outcome: 'ok' | 'error' | 'blocked';
+  /** 'sending' while in flight. Blocked calls are never recorded: the gate refuses them before this point. */
+  outcome: 'sending' | 'ok' | 'error';
   badge: InferenceBadge;
 }
 

@@ -58,6 +58,27 @@ describe('cloud gate', () => {
     expect(ledger.entries()[0]!.sentText.startsWith(gate.payloadFor(req))).toBe(true);
   });
 
+  it('shows an in-flight call as sending (found in Chrome: it read "Blocked before sending")', async () => {
+    const ledger = createLedger();
+    const consent = createConsentStore();
+    let release: (value: { text: string; badge: 'CLOUD' }) => void = () => undefined;
+    const gate = createCloudGate({
+      config: () => config({ cloudLaneEnabled: true }),
+      isOnline: () => true,
+      consent,
+      taint: createTaintRegistry(),
+      ledger,
+      cloudGenerate: () => () => new Promise((resolve) => (release = resolve)),
+    });
+    const req = request('Header is 32 bytes. Magic QNB1.');
+    const pending = gate.send(req, await consent.grant(gate.payloadFor(req)));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(ledger.entries()[0]).toMatchObject({ outcome: 'sending', badge: 'UNKNOWN' });
+    release({ text: '{"formatName":"QNB"}', badge: 'CLOUD' });
+    await pending;
+    expect(ledger.entries()[0]).toMatchObject({ outcome: 'ok', badge: 'CLOUD' });
+  });
+
   it('declined consent: nothing sent, nothing recorded', async () => {
     const { gate, ledger, sent } = setup();
     expect(await blockedCode(gate.send(request('public doc'), 'no-token'))).toBe('no-consent');

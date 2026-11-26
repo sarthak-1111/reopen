@@ -889,7 +889,6 @@ label.btn:focus-within {
   border-radius: 6px;
   padding: 8px;
 }
-.outcome-blocked strong,
 .outcome-error strong {
   color: var(--danger);
 }

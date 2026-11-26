@@ -3,7 +3,7 @@ import { badgeChip } from './cards';
 import { clear, downloadBytes, h } from './dom';
 import { formatBytes } from './view-model';
 
-const OUTCOME_LABEL: Record<LedgerEntry['outcome'], string> = { ok: 'Sent', error: 'Failed', blocked: 'Blocked before sending' };
+const OUTCOME_LABEL: Record<LedgerEntry['outcome'], string> = { sending: 'Sending…', ok: 'Sent', error: 'Failed' };
 
 function entryRow(entry: LedgerEntry): HTMLElement {
   const time = new Date(entry.at);
