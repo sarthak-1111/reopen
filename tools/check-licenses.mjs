@@ -1,14 +1,15 @@
 // Checks the licence of every production dependency (the code that ships to the browser).
-// Allowed: MIT, Apache-2.0, BSD-*, 0BSD. Warned (permissive, listed for review): ISC and other
-// permissive licences. Fails on GPL/LGPL/AGPL/MPL/EPL/CDDL/SSPL, unknown or missing licences.
+// Allowed: MIT, Apache-2.0, BSD-*, 0BSD, and ISC (accepted by the project owner on 2026-11-26
+// for packages that Firebase brings in). Warned (permissive, listed for review): other permissive
+// licences. Fails on GPL/LGPL/AGPL/MPL/EPL/CDDL/SSPL, unknown or missing licences.
 // Usage: node tools/check-licenses.mjs  (exit code 1 on failure)
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const root = process.cwd();
-const ALLOWED = new Set(['MIT', 'Apache-2.0', 'BSD-2-Clause', 'BSD-3-Clause', '0BSD']);
-const PERMISSIVE_WARN = new Set(['ISC', 'BSD', 'Unlicense', 'CC0-1.0', 'BlueOak-1.0.0', 'Python-2.0', 'Zlib', 'CC-BY-4.0']);
+const ALLOWED = new Set(['MIT', 'Apache-2.0', 'BSD-2-Clause', 'BSD-3-Clause', '0BSD', 'ISC']);
+const PERMISSIVE_WARN = new Set(['BSD', 'Unlicense', 'CC0-1.0', 'BlueOak-1.0.0', 'Python-2.0', 'Zlib', 'CC-BY-4.0']);
 const FORBIDDEN = /\b(A?GPL|LGPL|MPL|EPL|CDDL|SSPL|EUPL|OSL|CPAL)\b/i;
 
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';

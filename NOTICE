@@ -39,6 +39,13 @@ jschardet 4.1.0 — Copyright (c) 2026 Dan Blanchard (Python source),
   Copyright (c) 2026 António Afonso (JavaScript port)
 
 -------------------------------------------------------------------------------
+ISC License (brought in by the Firebase SDK)
+-------------------------------------------------------------------------------
+idb 7.1.1 — Copyright (c) 2016, Jake Archibald (IndexedDB wrapper used by Firebase; ships in the bundle)
+cliui 8.0.1, get-caller-file 2.0.5, y18n 5.0.8, yargs-parser 21.1.1 — command-line helpers
+  pulled in through Firebase's Node-only gRPC tooling; not part of the browser bundle.
+
+-------------------------------------------------------------------------------
 Format documentation
 -------------------------------------------------------------------------------
 The Word 97–2003 text reader (src/core/readers/word97.ts) was written from Microsoft's
