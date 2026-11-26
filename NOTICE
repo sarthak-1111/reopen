@@ -32,6 +32,28 @@ fflate 0.8.3 — Copyright (c) 2026 Arjun Barrett
 ajv 8.20.0 — Copyright (c) 2015-2021 Evgeny Poberezkin
 rtf.js 3.0.9 — Copyright (c) 2015 Thomas Bluemel
 
+taste-skill (MIT), Copyright (c) 2026 Leonxlnx — https://github.com/leonxlnx/taste-skill
+  Design guidance for the UI (src/ui/styles.css). Adapted, not copied as a whole:
+  - the fine-grain SVG noise tile (--g-noise-soft in assets/backgrounds/backgrounds.css),
+    used as --grain on the drop zone's lit stage;
+  - the layered radial-gradient composition of its .bg-stage ground (a light corner, a second
+    tone, a deep corner, a soft one, grain in soft-light), recoloured in sand;
+  - the hover/press numbers of assets/motion/motion.css (a 1px step up on hover for a fine
+    pointer, 1px down and scale .985 on press; 150/120/90 ms; the ease-out curve
+    cubic-bezier(.2,.8,.2,1) and the entrance curve cubic-bezier(.22,1,.36,1)).
+  Its licence: Permission is hereby granted, free of charge, to any person obtaining a copy of
+  this software and associated documentation files (the "Software"), to deal in the Software
+  without restriction, including without limitation the rights to use, copy, modify, merge,
+  publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to
+  whom the Software is furnished to do so, subject to the following conditions: The above
+  copyright notice and this permission notice shall be included in all copies or substantial
+  portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+  A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+
 -------------------------------------------------------------------------------
 Zero-Clause BSD (0BSD)
 -------------------------------------------------------------------------------
