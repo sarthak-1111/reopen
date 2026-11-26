@@ -107,7 +107,7 @@ Firebase setup:
    - For local development, leave `VITE_APPCHECK_DEBUG_TOKEN` empty, copy the debug token the SDK prints in the console, and register it under App Check → Manage debug tokens. Never commit it.
 5. Deploy: `npm run build && firebase deploy --only hosting,remoteconfig`
    - The Remote Config template is `firebase/remoteconfig.template.json`.
-   - Parameters: `cloud_lane_enabled`, `batch_size`, `cloud_model`, `cloud_max_output_tokens`, `nano_chunk_chars`, `ai_max_attempts`.
+   - Parameters: `cloud_lane_enabled`, `batch_size`, `cloud_model`, `cloud_max_output_tokens`, `cloud_thinking_level`, `nano_chunk_chars`, `ai_max_attempts`.
    - The app's built-in default keeps the cloud lane **off**.
 
 ## Tests

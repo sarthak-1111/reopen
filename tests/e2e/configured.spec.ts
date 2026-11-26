@@ -147,10 +147,17 @@ test.describe('configured build: the cloud lane and its fallbacks', () => {
 
     // Exactly one cloud call, and it carried exactly the reviewed text: no file bytes or contents.
     expect(mock.aiCalls).toHaveLength(1);
-    const sent = JSON.parse(mock.aiCalls[0]!.body!.toString('utf8')) as { contents: { parts: { text?: string }[] }[]; generationConfig?: { responseSchema?: unknown } };
+    const sent = JSON.parse(mock.aiCalls[0]!.body!.toString('utf8')) as {
+      contents: { parts: { text?: string }[] }[];
+      generationConfig?: { responseSchema?: unknown; responseMimeType?: string };
+    };
     const sentText = sent.contents.flatMap((c) => c.parts.map((p) => p.text ?? '')).join('');
     expect(sentText).toBe(payload);
-    expect(sent.generationConfig?.responseSchema).toBeTruthy();
+    // JSON mode, reply format inside the reviewed text, no constrained schema (the real service
+    // rejected the plugin schema with HTTP 400 "too many states", 2026-11-26).
+    expect(sent.generationConfig?.responseMimeType).toBe('application/json');
+    expect(sent.generationConfig?.responseSchema).toBeUndefined();
+    expect(sentText).toContain('Reply format (JSON Schema):');
     // App Check is attached to the cloud call (token from the mock's App Check exchange).
     expect(mock.aiCalls[0]!.headers['x-firebase-appcheck']).toBe('e2e-fake-app-check-token');
     expect(mock.attempts.some((r) => r.host === 'content-firebaseappcheck.googleapis.com')).toBe(true);

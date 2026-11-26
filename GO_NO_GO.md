@@ -17,7 +17,7 @@ your approval, two CLI sign-ins, the Gemini Nano download, and the Firebase cons
 | 2 | Gemini Nano in your Chrome | **PARTIAL.** The API is present and needs no flags; the model is *downloadable* but not downloaded yet. |
 | 3 | Format feasibility | **GO, with limits.** Spreadsheets, RTF and legacy-encoded text convert fully. Most word-processor formats only get text recovery (table below). |
 | 4 | Firebase setup | **PENDING YOU.** Steps in §4. |
-| 5 | Smoke test | **Cloud call PASSED on 2026-11-26** (§5). On-device and offline checks wait for the Nano download. |
+| 5 | Smoke test | **PASSED on 2026-11-26** (§5): cloud call, on-device call (zero network requests), and the format researcher end to end. Still open: the on-device call with the network fully off. |
 
 ## 1. Rules: what matters for Reopen
 
@@ -143,9 +143,10 @@ Setup completed on 2026-11-26:
 | Test | Result |
 |---|---|
 | Cloud call (`ONLY_IN_CLOUD`, `gemini-3.8-flash`, JSON schema) | **PASS** (2026-11-26 00:34 UTC). `inferenceSource = "in_cloud"`; output valid against the schema; latency **32,086 ms** (first call); one request: `firebasevertexai.googleapis.com/v1beta/projects/reopen-751ea/models/gemini-3.8-flash:generateContent`. The prompt is the smoke page's own made-up memo text. |
-| On-device call (`ONLY_ON_DEVICE`) | _pending: the Gemini Nano download started 2026-11-26 (at 28% when this was written)._ |
-| Offline: on-device succeeds, cloud fails cleanly | _pending: needs Nano._ |
-| Does `ONLY_ON_DEVICE` need the network for App Check? | _pending: needs Nano._ |
+| On-device call (`ONLY_ON_DEVICE`, `responseConstraint`) | **PASS** (2026-11-26 00:40 UTC, after the Nano download finished). `inferenceSource = "on_device"`; output valid against the schema; **19,220 ms** cold (includes loading the model), **1,067 ms** warm; **zero network requests** in both runs (page log and Chrome's network log). |
+| Offline: on-device succeeds, cloud fails cleanly | _pending: needs the network switched off on this PC (Playwright covers offline conversion without Nano)._ |
+| Does `ONLY_ON_DEVICE` need the network for App Check? | **No requests were made** during either on-device call while online. Behaviour with the network fully off is still to be confirmed (row above). |
+| Format researcher through the app's cloud gate | **PASS on the third attempt** (2026-11-26 00:51 UTC), with one real call of 1–2 min. Gemini drafted a valid "Quillstone Notebook" reader. All 21 local conformance checks passed on the three `samples/mystery/*.qnb` files, and they opened as "1989-04-15 Garden", "1990-11-02 Recipes" and "1991-02-20 Chess club". Earlier attempts: constrained decoding with the full plugin schema → **HTTP 400** "too many states for serving"; a lighter schema → **503** timeout after 3.5 min. Fix: JSON mode with the reply format inside the reviewed prompt text, thinking level LOW (Remote Config `cloud_thinking_level`), and local validation as before. |
 
 Raw record (cloud):
 

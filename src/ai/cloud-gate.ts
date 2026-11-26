@@ -1,4 +1,4 @@
-import type { ReopenConfig } from '../firebase/remote-config';
+import type { CloudThinkingLevel, ReopenConfig } from '../firebase/remote-config';
 import type { ConsentStore } from './consent';
 import type { Ledger } from './ledger';
 import type { GenResult, Generate } from './models';
@@ -25,8 +25,18 @@ export interface CloudRequest {
   docName: string;
   /** Public documentation text pasted or uploaded by the user. */
   docText: string;
-  /** Response schema (fixed, from the app source). */
+  /**
+   * Reply format (fixed, from the app source). Sent as TEXT inside the prompt, with JSON mode.
+   * Constrained decoding was tried first and failed in Chrome on 2026-11-26: HTTP 400 "too many
+   * states for serving", then a 503 timeout with a lighter schema. The answer is validated locally.
+   */
   schema: object;
+}
+
+/** Cloud model settings from Remote Config. */
+export interface CloudModelOptions {
+  maxOutputTokens: number;
+  thinkingLevel: CloudThinkingLevel | null;
 }
 
 export type CloudBlockCode = 'lane-disabled' | 'offline' | 'no-consent' | 'tainted' | 'empty';
@@ -48,7 +58,7 @@ export interface CloudGateDeps {
   taint: TaintRegistry;
   ledger: Ledger;
   /** Factory for the cloud model; production passes `createCloudGenerate` bound to the AI instance. */
-  cloudGenerate: (modelName: string, schema: object, maxOutputTokens: number) => Generate;
+  cloudGenerate: (modelName: string, options: CloudModelOptions) => Generate;
 }
 
 /** Exactly the text that is sent as the prompt. Shown to the user before consent. */
@@ -56,15 +66,18 @@ export function buildCloudPayload(request: CloudRequest): string {
   return [
     request.instructions.trim(),
     '',
+    'Reply format (JSON Schema):',
+    JSON.stringify(request.schema),
+    '',
     `--- PUBLIC DOCUMENTATION: ${request.docName.trim() || 'untitled'} ---`,
     request.docText.trim(),
     '--- END OF DOCUMENTATION ---',
   ].join('\n');
 }
 
-/** What the Privacy Ledger records: the prompt plus the response schema, both verbatim. */
-export function ledgerText(request: CloudRequest, payload: string): string {
-  return `${payload}\n\n[response schema]\n${JSON.stringify(request.schema)}`;
+/** What the Privacy Ledger records: the prompt verbatim (it already contains the reply format). */
+export function ledgerText(_request: CloudRequest, payload: string): string {
+  return payload;
 }
 
 export interface CloudGate {
@@ -97,7 +110,7 @@ export function createCloudGate(deps: CloudGateDeps): CloudGate {
 
       const ledgerId = deps.ledger.record({ feature: request.feature, model: config.cloudModel, sentText: ledgerText(request, payload) });
       try {
-        const generate = deps.cloudGenerate(config.cloudModel, request.schema, config.cloudMaxOutputTokens);
+        const generate = deps.cloudGenerate(config.cloudModel, { maxOutputTokens: config.cloudMaxOutputTokens, thinkingLevel: config.cloudThinkingLevel });
         const result = await generate(payload);
         deps.ledger.settle(ledgerId, 'ok', result.badge);
         return { ...result, ledgerId };

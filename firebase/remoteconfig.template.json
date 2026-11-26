@@ -20,6 +20,11 @@
       "valueType": "NUMBER",
       "description": "Output token cap for cloud calls."
     },
+    "cloud_thinking_level": {
+      "defaultValue": { "value": "LOW" },
+      "valueType": "STRING",
+      "description": "Gemini thinking level for the format researcher: MINIMAL, LOW, MEDIUM or HIGH; empty leaves it to the model."
+    },
     "nano_chunk_chars": {
       "defaultValue": { "value": "6000" },
       "valueType": "NUMBER",

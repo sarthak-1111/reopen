@@ -60,7 +60,10 @@ The cloud is used for one thing only: reading **public documentation** about a f
     - Structured output uses `promptOptions.responseConstraint`.
     - `createOptions` declares English and Japanese.
     - `initializeDeviceModel()` warms up the model and shows download progress.
-  - `InferenceMode.ONLY_IN_CLOUD` with `responseSchema` for the format researcher only.
+  - `InferenceMode.ONLY_IN_CLOUD` in JSON mode, for the format researcher only.
+    - The reply format is written into the reviewed prompt text, and the thinking level comes from Remote Config.
+    - The answer is validated locally against the full schema.
+    - We tried constrained `responseSchema` first: the real service rejected our plugin schema ("too many states"), so we switched and recorded why.
   - We deliberately never use `PREFER_ON_DEVICE`, because its silent fallback to the cloud would break the privacy promise. An architecture test fails the build if anyone adds it.
   - Badges come from `response.inferenceSource`.
 - **App Check** with reCAPTCHA Enterprise protects the Gemini endpoint. AI Logic enforcement is on.
@@ -128,4 +131,6 @@ and fictional (`SAMPLES.md`).
 
 - 290/290 tests, the build, the licence check, the secret scan, and `npm audit` (0 vulnerabilities): passing, 2026-11-26.
 - Real cloud call through Firebase AI Logic with App Check: passed, 2026-11-26.
-- _[verify]_ real on-device Nano call, offline behaviour, the researcher end to end, and the hosted demo.
+- Real on-device Nano call: passed (on_device, 1.1 s warm, zero network requests), 2026-11-26.
+- Format researcher end to end with a real cloud call: passed (21/21 local checks), 2026-11-26.
+- _[verify]_ the sample folder with Nano in the real app, the on-device call with the network off, and the hosted demo.

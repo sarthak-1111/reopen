@@ -114,11 +114,29 @@ A reader is certified only if **every** check passes.
   - **Model failures:** invalid JSON returns `invalid-json`; a schema-valid but inconsistent plugin returns `invalid-plugin` with the problems; a model error returns `model-error`, and the ledger entry is settled as `error`.
 - **Panel controller:** Cancel sends nothing. Without the "public documentation" tick nothing is sent. With it, exactly the reviewed payload is sent once, and a second confirm without a new review sends nothing. Lane status messages cover: not configured, lane off, offline.
 
+## Verified in Chrome with the real service (2026-11-26)
+
+Setup: desktop Chrome on Windows, the local dev server, Firebase AI Logic with the Gemini Developer API, and App Check with a debug token.
+
+1. **First attempt:** constrained decoding with `READER_PLUGIN_SCHEMA` as `responseSchema` → **HTTP 400** "The specified schema produces a constraint that has too many states for serving".
+2. **Second attempt:** a lighter copy of the schema (no `maxItems`, `description` or `nullable`) → **HTTP 503** "Deadline expired" after 3.5 min.
+3. **Third attempt:** JSON mode with no `responseSchema`. The reply format goes into the reviewed prompt text, and the thinking level is LOW (Remote Config `cloud_thinking_level`).
+   - Gemini drafted a reader for "Quillstone Notebook" in 1–2 min, and it passed local schema and semantic validation.
+   - **All 21 conformance checks passed** on the three `samples/mystery/*.qnb` files.
+   - **Use this reader** added them to the library as full conversions: "1989-04-15 Garden", "1990-11-02 Recipes" and "1991-02-20 Chess club".
+
+Also seen in that run:
+- The ledger showed the entry as "Sending…" and then "Sent".
+- The cloud counter read 1.
+- The consent dialog, the file inputs and the known-text field worked in Chrome.
+- The Playwright suite (`tests/e2e/configured.spec.ts`) covers the same flow against a mock, including declining consent, the lane being off, and being offline.
+
 ## Not verified yet
 
-- **No real cloud call yet.** A real Gemini call through Firebase AI Logic has not been made, so whether Gemini returns a valid plugin from the QNB spec is unknown. It needs AI Logic, App Check and a Remote Config lane switched on.
-- **Not run in a browser yet.** The DOM panel has not been run in Chrome. That covers the `<dialog>` focus and Escape behaviour, the file pickers, `DOMParser` for .html specs, and the online/offline events. It is type-checked and built, but not exercised in tests (vitest runs in Node without a DOM).
-- **Wiring is with the main thread.** `src/main.ts` does not pass `researcher` or `onFileLoaded` yet, so the app currently shows the placeholder.
+- **Model variability.** Only one successful real draft so far. Another run may draft a reader that fails the local checks. The app then says so, uses nothing, and lets the user try again with fresh consent.
+- **Small UI issues seen in that run:**
+  - The "files processed on this device" counter stays at 0 for files read with a drafted reader.
+  - Their cards still say "Format: Unknown format".
 
 ## Known limitation
 

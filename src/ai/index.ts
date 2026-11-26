@@ -50,7 +50,7 @@ export async function initAiRuntime(): Promise<AiRuntime> {
       consent,
       taint,
       ledger,
-      cloudGenerate: (modelName, schema, maxOutputTokens) => createCloudGenerate(handles.ai, modelName, schema, maxOutputTokens),
+      cloudGenerate: (modelName, options) => createCloudGenerate(handles.ai, modelName, options),
     });
     const service = createAiService({
       configured: true,

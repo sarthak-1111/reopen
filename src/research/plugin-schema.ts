@@ -155,6 +155,32 @@ export const READER_PLUGIN_SCHEMA = {
   required: ['formatName', 'formatVersion', 'endianness', 'magic', 'defaultEncoding', 'header', 'body'],
 } as const;
 
+const CLOUD_DROPPED_KEYS = new Set(['maxItems', 'minItems', 'description', 'nullable']);
+
+/**
+ * A lighter copy of a schema for Gemini's constrained decoding. The full schema got HTTP 400
+ * "The specified schema produces a constraint that has too many states for serving" (first real
+ * call, 2026-11-26). This copy keeps every property, type, enum and required list. It drops array
+ * limits, descriptions and `nullable`, so the model leaves out absent fields instead. The answer
+ * is still validated locally against the FULL schema plus `semanticProblems`.
+ */
+export function toCloudSchema(schema: object): object {
+  const strip = (value: unknown, isPropertyMap: boolean): unknown => {
+    if (Array.isArray(value)) return value.map((item) => strip(item, false));
+    if (!value || typeof value !== 'object') return value;
+    const out: Record<string, unknown> = {};
+    for (const [key, child] of Object.entries(value)) {
+      if (!isPropertyMap && CLOUD_DROPPED_KEYS.has(key)) continue;
+      out[key] = strip(child, !isPropertyMap && key === 'properties');
+    }
+    return out;
+  };
+  return strip(schema, false) as object;
+}
+
+/** What the format researcher sends as `responseSchema` (and what the Privacy Ledger shows). */
+export const CLOUD_READER_SCHEMA = toCloudSchema(READER_PLUGIN_SCHEMA);
+
 const NUMERIC: ReadonlySet<FieldType> = new Set(['u8', 'u16', 'u32', 'i16', 'i32']);
 export const isNumericType = (type: FieldType): boolean => NUMERIC.has(type);
 

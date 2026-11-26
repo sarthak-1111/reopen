@@ -58,6 +58,38 @@ describe('cloud gate', () => {
     expect(ledger.entries()[0]!.sentText.startsWith(gate.payloadFor(req))).toBe(true);
   });
 
+  it('puts the reply format in the prompt (JSON mode, no constrained schema) and passes model options from Remote Config', async () => {
+    // Found in Chrome: constrained decoding with the plugin schema got HTTP 400 "too many states",
+    // and a lighter schema timed out (503) after 3.5 minutes.
+    const seen: Array<{ model: string; options: unknown }> = [];
+    const consent = createConsentStore();
+    const gate = createCloudGate({
+      config: () => config({ cloudLaneEnabled: true, cloudModel: 'gemini-test', cloudMaxOutputTokens: 2048, cloudThinkingLevel: 'LOW' }),
+      isOnline: () => true,
+      consent,
+      taint: createTaintRegistry(),
+      ledger: createLedger(),
+      cloudGenerate: (model, options) => {
+        seen.push({ model, options });
+        return async () => ({ text: '{"formatName":"QNB"}', badge: 'CLOUD' });
+      },
+    });
+    const req = request('Header is 32 bytes. Magic QNB1.');
+    const payload = gate.payloadFor(req);
+    expect(payload).toContain(JSON.stringify(req.schema));
+    expect(payload.indexOf(JSON.stringify(req.schema))).toBeLessThan(payload.indexOf('--- PUBLIC DOCUMENTATION'));
+    await gate.send(req, await consent.grant(payload));
+    expect(seen).toEqual([{ model: 'gemini-test', options: { maxOutputTokens: 2048, thinkingLevel: 'LOW' } }]);
+  });
+
+  it('sanitises the thinking level from Remote Config', () => {
+    expect(sanitiseConfig({}, 'remote').cloudThinkingLevel).toBe('LOW');
+    expect(sanitiseConfig({ cloudThinkingLevel: 'medium' }, 'remote').cloudThinkingLevel).toBe('MEDIUM');
+    expect(sanitiseConfig({ cloudThinkingLevel: 'NONE' }, 'remote').cloudThinkingLevel).toBeNull();
+    expect(sanitiseConfig({ cloudThinkingLevel: '' }, 'remote').cloudThinkingLevel).toBeNull();
+    expect(sanitiseConfig({ cloudThinkingLevel: 'ultra; drop' }, 'remote').cloudThinkingLevel).toBe('LOW');
+  });
+
   it('shows an in-flight call as sending (found in Chrome: it read "Blocked before sending")', async () => {
     const ledger = createLedger();
     const consent = createConsentStore();

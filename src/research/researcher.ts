@@ -7,7 +7,7 @@ import { blocksToMarkdown } from '../core/writers/markdown';
 import { docxBytes } from '../core/writers/docx';
 import { runConformance, type ConformanceOptions, type ConformanceReport, type SampleFile } from './conformance';
 import { readWithPlugin, type PluginBlock } from './interpreter';
-import { READER_PLUGIN_SCHEMA, semanticProblems, type ReaderPlugin } from './plugin-schema';
+import { CLOUD_READER_SCHEMA, READER_PLUGIN_SCHEMA, semanticProblems, type ReaderPlugin } from './plugin-schema';
 
 /** Fixed instructions sent with the user's public documentation. Contains no user data. */
 export const RESEARCH_INSTRUCTIONS = [
@@ -71,7 +71,7 @@ export function createResearcher(gate: CloudGate): Researcher {
         instructions: RESEARCH_INSTRUCTIONS,
         docName: docName.trim() || 'Public format documentation',
         docText,
-        schema: READER_PLUGIN_SCHEMA,
+        schema: CLOUD_READER_SCHEMA,
       };
       return { request, payload: buildCloudPayload(request) };
     },

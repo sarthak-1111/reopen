@@ -78,9 +78,9 @@ npm run secret-scan # fails on API keys, App Check debug tokens, private keys or
 |---|---|
 | `npm test` (unit, property, fallback, architecture) | Passing: 290 tests on 2026-11-26 |
 | `npm run build`, `npm run licenses`, `npm audit --omit=dev` | Passing (0 vulnerabilities) on 2026-11-26 |
-| Playwright E2E against the local build | _pending_ |
-| Real Gemini Nano call through Firebase AI Logic (`ONLY_ON_DEVICE`) | _pending: needs AI Logic, App Check and the Nano download_ |
+| Playwright E2E against the local build (Firebase mocked) | Passing: 24 passed, 1 skipped (with-Nano test needs `E2E_CHROME_PROFILE`), 2026-11-26 |
+| Real Gemini Nano call through Firebase AI Logic (`ONLY_ON_DEVICE`) | Passed on the smoke page, 2026-11-26: `inferenceSource = on_device`, schema-valid, 1.1 s warm, zero network requests (GO_NO_GO.md §5) |
 | Real cloud Gemini call (`ONLY_IN_CLOUD`) through Firebase AI Logic with App Check | Passed on the smoke page, 2026-11-26: `inferenceSource = in_cloud`, schema-valid, 32 s (GO_NO_GO.md §5) |
-| Real cloud call through the app's gate (format researcher) | _pending_ |
-| Whether on-device calls need the network for App Check | _pending_ |
+| Real cloud call through the app's gate (format researcher) | Passed in Chrome, 2026-11-26: reader drafted (1–2 min), 21/21 local checks, three `.qnb` files opened. Needed a fix first (see GO_NO_GO.md §5) |
+| Whether on-device calls need the network for App Check | No requests during on-device calls while online; fully-offline run _pending_ |
 | Hosted demo in Chrome, with and without Nano | _pending deployment_ |
