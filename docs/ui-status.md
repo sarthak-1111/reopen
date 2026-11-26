@@ -22,7 +22,7 @@ real one lands; everything below was checked with that stub, i.e. the "no on-dev
 | `src/ui/nano-chip.ts` | On-device AI status chip + "Wake on-device AI" (download progress) |
 | `src/ui/researcher-panel.ts` | **Placeholder** for the format researcher, mounted at `#format-researcher-root` |
 | `src/ui/sw-register.ts`, `public/sw.js` | Offline app shell; "Ready offline" chip |
-| `src/ui/styles.css` | Warm paper/ink theme, light and dark, reduced motion, 360 px+ |
+| `src/ui/styles.css` | Neutral light theme with one rust accent and a sand drop stage (v1.1 design pass), light and dark, reduced motion, forced colours, 360 px+ |
 | `src/ai/contract.ts`, `stub.ts`, `index.ts` | AI service interface the UI talks to; the stub reports "not set up" and never sends anything |
 | `public/manifest.webmanifest`, `public/icon.svg` | Web app manifest and a self-made icon |
 | `vite.config.ts` | Adds the app entry, ES-module workers, `__BUILD_ID__`, and emits `precache-manifest.json` |

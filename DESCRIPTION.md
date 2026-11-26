@@ -97,7 +97,7 @@ It writes the exact text to the Privacy Ledger **before** sending.
 - One screen and one action: drop a folder in.
 - The header always shows where things run: on-device AI state, files processed on this device, cloud calls.
 - Every card explains how the format was recognised ("Detected from the bytes inside the file, not from its name").
-- Calm and readable: warm paper colours, one type scale, and colour kept for the ON DEVICE / CLOUD / NO AI stamps and status dots.
+- Calm and readable: a quiet light page with white cards, one accent colour, one type scale, and colour kept for the ON DEVICE / CLOUD / NO AI stamps and status dots.
 - Accessibility: native buttons, inputs and `<dialog>`, labelled controls, live regions for progress, a skip link (tested with the keyboard in Playwright), visible focus rings, and reduced-motion support. Text contrast measures at least 4.5:1 in light and dark themes, and the layout has no horizontal scrolling at 360 px wide.
 
 **Potential Impact**

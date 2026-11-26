@@ -134,7 +134,8 @@ Firebase setup:
 
 ## Acknowledgements
 
-The UI pass followed the design checklist in [heydamir/unslop](https://github.com/heydamir/unslop) (CC-BY-4.0). Only its principles were applied; no files, text or code were copied.
+- The first UI pass followed the design checklist in [heydamir/unslop](https://github.com/heydamir/unslop) (CC-BY-4.0). Only its principles were applied; no files, text or code were copied.
+- The v1.1 design pass followed [leonxlnx/taste-skill](https://github.com/leonxlnx/taste-skill) (MIT). The grain texture, the stage gradient and the button timing were adapted from it; see `NOTICE`.
 
 ## Licence
 
