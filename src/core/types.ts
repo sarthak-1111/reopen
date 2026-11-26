@@ -48,6 +48,8 @@ export interface Detection {
   confidence: number;
   /** Stream names when the file is an OLE compound file. */
   oleStreams?: string[];
+  /** Display name when the format was identified outside the built-in detector (a researched reader). */
+  label?: string;
 }
 
 export interface EncodingCandidate {

@@ -254,6 +254,7 @@ export function toCatalogueEntry(item: RescuedItem): CatalogueEntry {
     originalPath: item.originalPath,
     newName: item.finalName,
     format: item.result.detected.format,
+    ...(item.result.detected.label ? { formatName: item.result.detected.label } : {}),
     evidence: item.result.detected.evidence,
     ...(item.result.encoding ? { encoding: item.result.encoding.encoding } : {}),
     conversionLevel: item.result.conversionLevel,

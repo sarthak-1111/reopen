@@ -347,6 +347,8 @@ export function startApp(options: AppOptions): void {
         insight,
       };
       if (existing >= 0) items.splice(existing, 1);
+      // Files added only for the researcher's tests were not counted yet; session files were.
+      else counters.processedOnDevice++;
       items.push(item);
       showCard(item, items.length - 1);
     }
@@ -354,6 +356,7 @@ export function startApp(options: AppOptions): void {
     sessionChanged();
     els.results.hidden = false;
     els.exportAll.disabled = items.length === 0;
+    renderCounters();
   };
 
   const exportAll = async (): Promise<void> => {

@@ -4,6 +4,8 @@ export interface CatalogueEntry {
   originalPath: string;
   newName: string;
   format: FormatId;
+  /** Display name for a format identified by a researched reader (shown instead of the id). */
+  formatName?: string;
   evidence: string[];
   encoding?: string;
   conversionLevel: ConversionLevel;
@@ -47,7 +49,7 @@ export function buildCatalogueHtml(entries: CatalogueEntry[], meta: CatalogueMet
       return `<tr>
   <td><strong>${escapeHtml(e.newName)}</strong>${e.summary ? `<p>${escapeHtml(e.summary)}</p>` : ''}</td>
   <td><code>${escapeHtml(e.originalPath)}</code></td>
-  <td>${escapeHtml(e.format)}<details><summary>Why</summary><ul>${evidence}</ul></details></td>
+  <td>${escapeHtml(e.formatName ?? e.format)}<details><summary>Why</summary><ul>${evidence}</ul></details></td>
   <td>${escapeHtml(e.encoding ?? '—')}</td>
   <td>${escapeHtml(LEVEL_LABEL[e.conversionLevel])}${warnings}</td>
   <td>${escapeHtml(ai)}</td>
@@ -109,7 +111,7 @@ export function buildRescueReport(entries: CatalogueEntry[], meta: CatalogueMeta
   for (const e of entries) {
     lines.push(`### ${e.newName}`, '');
     lines.push(`- Original: \`${e.originalPath}\``);
-    lines.push(`- Detected format: ${e.format}${e.encoding ? ` (encoding ${e.encoding})` : ''}`);
+    lines.push(`- Detected format: ${e.formatName ?? e.format}${e.encoding ? ` (encoding ${e.encoding})` : ''}`);
     lines.push(`- Conversion: ${LEVEL_LABEL[e.conversionLevel]}`);
     lines.push(`- AI: ${e.aiSource === 'on_device' ? 'on device' : e.aiSource === 'in_cloud' ? 'cloud' : 'none'}`);
     if (e.outputs.length) lines.push(`- Outputs: ${e.outputs.map((o) => `\`${o.path}\``).join(', ')}`);

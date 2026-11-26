@@ -128,6 +128,7 @@ export function createResearcher(gate: CloudGate): Researcher {
         source: { path: sample.name, size: sample.bytes.length },
         detected: {
           format: 'unknown',
+          label: plugin.formatName,
           family: 'document',
           evidence: [
             `Signature matches “${plugin.formatName}” (${plugin.formatVersion}).`,

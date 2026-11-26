@@ -164,7 +164,7 @@ export function renderCard(item: RescuedItem, index: number): HTMLElement {
       'dl',
       { class: 'facts' },
       h('dt', { text: 'Format' }),
-      h('dd', { text: formatLabel(result.detected.format) }),
+      h('dd', { text: result.detected.label ?? formatLabel(result.detected.format) }),
       encoding ? h('dt', { text: 'Encoding' }) : null,
       encoding ? h('dd', { text: encoding }) : null,
       sheetInfo ? h('dt', { text: 'Contents' }) : null,

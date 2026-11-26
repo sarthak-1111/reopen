@@ -175,11 +175,16 @@ test.describe('configured build: the cloud lane and its fallbacks', () => {
     await page.locator('#research-known-text').fill(QNB_ENTRY.includes![0]!);
     await page.getByRole('button', { name: 'Run tests on this computer' }).click();
     await expect(page.locator('.research-report')).toContainText('All tests passed on this computer.');
+    const processedBefore = (await page.locator('#count-device').textContent()) ?? '';
     await page.getByRole('button', { name: 'Use this reader' }).click();
     await expect(researcherStatus(page)).toHaveText('Added 1 file to your library, read on this device.');
 
     const rescued = card(page, QNB_PATH);
     await expect(rescued.locator('.chip').first()).not.toHaveText('Not converted');
+    // Found in Chrome: the card said "Format: Unknown format" after the reader was applied.
+    await expect(rescued.locator('.facts dd').first()).toHaveText('Quillstone Notebook');
+    // This file was already counted when the folder was rescued; applying a reader must not count it twice.
+    await expect(page.locator('#count-device')).toHaveText(processedBefore);
     for (const phrase of QNB_ENTRY.includes!) await expect(rescued).toContainText(phrase);
     // Still exactly one cloud call: reading the file happened on this device.
     expect(mock.aiCalls).toHaveLength(1);

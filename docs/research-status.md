@@ -134,9 +134,9 @@ Also seen in that run:
 ## Not verified yet
 
 - **Model variability.** Only one successful real draft so far. Another run may draft a reader that fails the local checks. The app then says so, uses nothing, and lets the user try again with fresh consent.
-- **Small UI issues seen in that run:**
-  - The "files processed on this device" counter stays at 0 for files read with a drafted reader.
-  - Their cards still say "Format: Unknown format".
+- **Two UI issues seen in that run are fixed:** cards now show the drafted format's name, and files added only for the tests now count as processed on this device.
+  - The Playwright flow checks the name, and that session files are not counted twice.
+  - The new counting for test-only files has not been re-run against the real service.
 
 ## Known limitation
 

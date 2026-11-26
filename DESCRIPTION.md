@@ -133,4 +133,5 @@ and fictional (`SAMPLES.md`).
 - Real cloud call through Firebase AI Logic with App Check: passed, 2026-11-26.
 - Real on-device Nano call: passed (on_device, 1.1 s warm, zero network requests), 2026-11-26.
 - Format researcher end to end with a real cloud call: passed (21/21 local checks), 2026-11-26.
-- _[verify]_ the sample folder with Nano in the real app, the on-device call with the network off, and the hosted demo.
+- Sample folder with Nano in the real app: passed (14/15 rescued, 43 ON DEVICE results, 0 cloud calls, no external requests), 2026-11-26.
+- _[verify]_ the on-device call with the network fully off, and the hosted demo.

@@ -83,4 +83,6 @@ npm run secret-scan # fails on API keys, App Check debug tokens, private keys or
 | Real cloud Gemini call (`ONLY_IN_CLOUD`) through Firebase AI Logic with App Check | Passed on the smoke page, 2026-11-26: `inferenceSource = in_cloud`, schema-valid, 32 s (GO_NO_GO.md §5) |
 | Real cloud call through the app's gate (format researcher) | Passed in Chrome, 2026-11-26: reader drafted (1–2 min), 21/21 local checks, three `.qnb` files opened. Needed a fix first (see GO_NO_GO.md §5) |
 | Whether on-device calls need the network for App Check | No requests during on-device calls while online; fully-offline run _pending_ |
+| Sample folder in the real app with Gemini Nano (local dev server, Chrome on Windows) | Passed, 2026-11-26: "14 of 15 files rescued on this device. Cloud calls: 0." in about 45 s, with 43 ON DEVICE badges (summaries, names, reconstruction). Only same-origin and blob requests appeared in Chrome's network log. WordPerfect reconstruction passed the no-invention check |
+| Without Nano | Playwright (fresh profile, Nano unavailable): every card says NO AI, and recovered text is shown raw and labelled |
 | Hosted demo in Chrome, with and without Nano | _pending deployment_ |
