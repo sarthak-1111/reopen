@@ -141,8 +141,8 @@ Also seen in that run:
 
 ## Not verified yet
 
-- **Model variability.** Three successful real drafts so far (one with `gemini-3.8-flash`, two with `gemini-4-hydrogen`). Another run may draft a reader that fails the local checks. The app then says so, uses nothing, and lets the user try again with fresh consent.
-- **Latency.** A draft takes between about 1.5 and 3 minutes, and the model can be busy. The panel shows progress text, but no time estimate.
+- **Model variability.** Four successful real drafts so far (one with `gemini-3.8-flash`, three with `gemini-4-hydrogen`, including the one in the demo video). Another run may draft a reader that fails the local checks. The app then says so, uses nothing, and lets the user try again with fresh consent.
+- **Latency.** The three `gemini-4-hydrogen` drafts so far took about 13 s, under 90 s and about 160 s, and the model can be busy. The panel shows progress text, but no time estimate.
 
 ## Known limitation
 

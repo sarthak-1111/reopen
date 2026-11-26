@@ -46,7 +46,8 @@ The cloud is used for one thing only: reading **public documentation** about a f
   - Every AI result has an **ON DEVICE** or **CLOUD** badge, taken from the SDK's own `inferenceSource`.
   - A live counter shows cloud calls.
   - A **Privacy Ledger** records the exact text of every cloud call.
-- **Works offline** once loaded (service worker), and works without Gemini Nano: conversion is deterministic, and recovered text is shown raw and labelled.
+- **Works offline** once loaded (service worker), and Gemini Nano keeps working with the network off.
+- **Works without Gemini Nano** too: conversion is deterministic, and recovered text is shown raw and labelled.
 
 ## How we built it: Firebase AI Logic and Firebase
 
@@ -129,6 +130,7 @@ and fictional (`SAMPLES.md`).
 On https://reopen-751ea.web.app in Chrome 156 on Windows, with Gemini Nano, on 2026-11-26:
 - The sample folder: 14 of 15 files rescued in about a minute, 43 ON DEVICE results, **0 cloud calls**, and no requests to any other site.
 - The format researcher, with production App Check: the reader was drafted by cloud Gemini in under two minutes, passed 21 of 21 local checks, and opened all three notebooks.
+- With the network switched off (browser offline mode, production build): 14 of 15 files rescued with every on-device call succeeding, and nothing reached the network.
 - Without Nano (a fresh Chrome profile, Playwright): conversion works, recovered text is labelled raw, and the app works offline after one visit.
 
 Full details are in `TESTING.md`.
