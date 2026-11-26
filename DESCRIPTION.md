@@ -117,7 +117,7 @@ It writes the exact text to the Privacy Ledger **before** sending.
 ## What we built during the submission period
 
 Everything in the repository was written from scratch starting 2026-11-24, as the git history shows. Pre-existing code is limited to the
-open-source libraries listed in `NOTICE` (MIT, Apache-2.0, BSD-family and 0BSD; no GPL or LGPL). All sample files are self-made
+open-source libraries listed in `NOTICE` (MIT, Apache-2.0, BSD-family, 0BSD and ISC; no GPL or LGPL). All sample files are self-made
 and fictional (`SAMPLES.md`).
 
 ## What's next
@@ -133,4 +133,4 @@ On https://reopen-751ea.web.app in Chrome 156 on Windows, with Gemini Nano, on 2
 - With the network switched off (browser offline mode, production build): 14 of 15 files rescued with every on-device call succeeding, and nothing reached the network.
 - Without Nano (a fresh Chrome profile, Playwright): conversion works, recovered text is labelled raw, and the app works offline after one visit.
 
-Full details are in `TESTING.md`.
+Full details are in `TESTING.md` in the repository: https://github.com/sarthak-1111/reopen

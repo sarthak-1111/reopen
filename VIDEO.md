@@ -50,4 +50,4 @@ dedicated Chrome profile; DevTools was never open. Every file shown is a self-ma
 - [x] Runtime is under 3:00 (2:44.9).
 - [x] Nothing personal or secret is visible: no tokens, no email addresses, no real files.
 - [x] No third-party logos; product names appear as plain text only.
-- [ ] Uploaded to YouTube as **Public**, and the link added to the Devpost form.
+- [x] Uploaded to YouTube as **Public** (https://youtu.be/WDQdlzX-Ni4, 2026-11-26), and the link added to the Devpost submission.

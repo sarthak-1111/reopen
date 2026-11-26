@@ -8,6 +8,8 @@ DOCX, Markdown, CSV and PNG, gives them sensible names, and builds a browsable c
 your browser. The AI that helps (Gemini Nano) runs **on your device**, through Firebase AI Logic.
 
 - **Hosted demo:** https://reopen-751ea.web.app (desktop Chrome; Gemini Nano optional)
+- **Demo video (2:45):** https://youtu.be/WDQdlzX-Ni4
+- **Devpost:** https://devpost.com/software/reopen-bzark7
 - **Built for:** #BuildHybridAI 2026 (Web / Chrome). Licence: Apache-2.0.
 
 ## The routing rule
